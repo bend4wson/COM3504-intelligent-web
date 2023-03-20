@@ -67,6 +67,7 @@ passport.deserializeUser(async (id, done) => {
 
 
 app.use('/', indexRouter);
+
 app.use('/users', usersRouter);
 
 // Registration route
