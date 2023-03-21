@@ -36,3 +36,11 @@ body {
   font-size: 2rem;
   font-weight: bold;
 }
+
+.bird-thumbnail {
+  width: 100px;
+}
+
+.bird-img {
+  width: 100%;
+}
