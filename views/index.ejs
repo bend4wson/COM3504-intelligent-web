@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title><%= title %></title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <link rel="manifest" href="/manifest.json">
+</head>
+
+<body>
+  <h1>Bird Watching Page</h1>
+
+  <input type="button" onclick="registerPage()" value="Log In/Sign Up" />
+  <input type="button" onclick="addSighting()" value="Add a sighting" />
+</body>
+
+
+<script>
+  function registerPage(){
+    window.location.href = "/register";
+  }
+
+  function addSighting(){
+    window.location.href = "/add_sighting";
+  }
+</script>
+<!--<script src="/javascripts/converter.js"></script>-->
+<!--<script>-->
+<!--  if('serviceWorker' in navigator) {-->
+<!--    navigator.serviceWorker.register('/sw.js', { scope: '/' });-->
+<!--  }-->
+<!--</script>-->
+
+
+</html>
+
