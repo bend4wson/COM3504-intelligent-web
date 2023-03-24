@@ -9,8 +9,8 @@ const logger = require('morgan');
 const session = require('express-session');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-const User = require('./databases/users');
-
+const Users = require('./databases/users');
+const db = require('./databases/database');
 
 const indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -35,7 +35,7 @@ app.use(passport.session());
 //Configuring the Passport.js strategies, serializers and deserializers
 passport.use(new LocalStrategy(async (username, password, done) => {
   try {
-    const user = await User.findOne({ username });
+    const user = await Users.findOne({ username });
     if (!user) {
       return done(null, false, { message: 'Incorrect username.' });
     }
@@ -57,7 +57,7 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser(async (id, done) => {
   try {
-    const user = await User.findById(id);
+    const user = await Users.findById(id);
     done(null, user);
   } catch (err) {
     done(err, null);
@@ -73,7 +73,7 @@ app.use('/users', usersRouter);
 // Registration route
 app.post('/register', async (req, res) => {
   const { username, password } = req.body;
-  const newUser = new User({ username, password });
+  const newUser = new Users({ username, password });
   await newUser.save();
   res.redirect('/login');
 });
