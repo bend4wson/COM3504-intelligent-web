@@ -9,7 +9,7 @@
     <body>
         <h1>Add your sighting below:</h1>
 
-        <form id="sightingForm">
+        <form id="sightingForm" action="/sightings/add_sighting" method="POST">
             <input type="text" id="type" placeholder="Bird Type" />
             <textarea id="description" placeholder="Description"></textarea>
             <input type="text" id="lat" placeholder="Latitude" />
@@ -17,9 +17,15 @@
             <!-- image input is needed here for the bird sighting,
              there is a lab on how to add images to mongodb, including
              code -->
-            <button type="submit">Submit Sighting</button>
+            <button type="submit" onclick="addSighting()">Submit Sighting</button>
         </form>
-        <script src="/javascripts/addSighting.js"></script>
+<!--        <script src="/javascripts/addSighting.js"></script>-->
+        <script>
+            function addSighting() {
+                const form = document.getElementById('sightingForm');
+                form.submit();
+            }
+        </script>
     </body>
 
 <script>

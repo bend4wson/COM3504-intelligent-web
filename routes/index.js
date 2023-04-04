@@ -9,27 +9,9 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Bird Watching Page' });
 });
 
-router.get('/register', async (req, res) => {
-  console.log("1 *******");
-  res.render('register', { title: 'Registration Page' });
-});
-
-router.post('/register', async (req, res) => {
-  const { username, password } = req.body;
-  const newUser = new Users({ username, password });
-  await newUser.save();
-  console.log("SUBMITTED");
-  res.redirect('/login');
-});
-
-//Need to update this and create a login page
-router.get('/login', async (req, res) => {
-  // res.render('register', { title: 'Registration Page' });
+//This needs implementing if we're doing a dashboard page
+router.get('/dashboard', function(req, res, next) {
   res.render('index', { title: 'Bird Watching Page' });
-});
-
-router.get('/add_sighting', function(req, res, next) {
-  res.render('addSighting', { title: 'Add a new Sighting' });
 });
 
 module.exports = router;
