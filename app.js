@@ -75,6 +75,7 @@ app.post('/register', async (req, res) => {
   const { username, password } = req.body;
   const newUser = new Users({ username, password });
   await newUser.save();
+  console.log("*******");
   res.redirect('/login');
 });
 
