@@ -33,6 +33,12 @@ app.use(session({ secret: 'your-session-secret', resave: false, saveUninitialize
 app.use(passport.initialize());
 app.use(passport.session());
 
+//For the bird sighting form
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+
+
 // Configuring the Passport.js strategies, serializers and deserializers
 passport.use(new LocalStrategy(async (username, password, done) => {
   try {

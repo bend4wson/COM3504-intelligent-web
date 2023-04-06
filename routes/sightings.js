@@ -14,15 +14,38 @@ const Users = require("../databases/users");
 //     }
 // });
 
+// router.post('/add_sighting', async (req, res) => {
+//     try {
+//         console.log("****")
+//         const newSighting = new Sighting(req.body);
+//         await newSighting.save();
+//         console.log("Sighting added successfully");
+//         res.redirect('/');
+//     } catch (error) {
+//         console.log("!!!!")
+//         console.error("Error adding sighting", error);
+//         res.status(400).json({ message: 'Error adding sighting', error });
+//     }
+// });
+
 router.post('/add_sighting', async (req, res) => {
     try {
-        console.log("****")
-        const newSighting = new Sighting(req.body);
+        const newSighting = new Sighting({
+            type: req.body.type,
+            description: req.body.description,
+            location: {
+                lat: req.body.location.lat,
+                lng: req.body.location.lng,
+            },
+            picture: {
+                data: req.file.buffer,
+                contentType: req.file.mimetype,
+            },
+        });
         await newSighting.save();
         console.log("Sighting added successfully");
         res.redirect('/');
     } catch (error) {
-        console.log("!!!!")
         console.error("Error adding sighting", error);
         res.status(400).json({ message: 'Error adding sighting', error });
     }
