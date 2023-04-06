@@ -9,8 +9,8 @@ const logger = require('morgan');
 const session = require('express-session');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-const Users = require('./databases/users');
-const db = require('./databases/database');
+const User = require('./databases/users');
+
 
 const indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -35,7 +35,7 @@ app.use(passport.session());
 //Configuring the Passport.js strategies, serializers and deserializers
 passport.use(new LocalStrategy(async (username, password, done) => {
   try {
-    const user = await Users.findOne({ username });
+    const user = await User.findOne({ username });
     if (!user) {
       return done(null, false, { message: 'Incorrect username.' });
     }
@@ -57,7 +57,7 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser(async (id, done) => {
   try {
-    const user = await Users.findById(id);
+    const user = await User.findById(id);
     done(null, user);
   } catch (err) {
     done(err, null);
@@ -73,9 +73,8 @@ app.use('/users', usersRouter);
 // Registration route
 app.post('/register', async (req, res) => {
   const { username, password } = req.body;
-  const newUser = new Users({ username, password });
+  const newUser = new User({ username, password });
   await newUser.save();
-  console.log("*******");
   res.redirect('/login');
 });
 
@@ -89,6 +88,14 @@ app.post('/login', passport.authenticate('local', {
 // Authentication-protected route
 app.get('/dashboard', ensureAuthenticated, (req, res) => {
   // Your dashboard route logic here
+});
+
+app.get('/list', (req, res) => {
+  res.render("list", { title: 'Bird List Page' });
+});
+
+app.get('/detail', (req, res) => {
+  res.render("detail", { title: 'Bird Detail Page' });
 });
 
 function ensureAuthenticated(req, res, next) {
