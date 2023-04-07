@@ -43,4 +43,12 @@ router.get('/add_sighting', function(req, res, next) {
     res.render('addSighting', { title: 'Add a new Sighting' });
 });
 
+// router.get('/', (req, res) => {
+//     res.render("list", { title: 'Bird List Page' });
+// });
+
+router.get('/detail', (req, res) => {
+    res.render("detail", { title: 'Bird Detail Page' });
+});
+
 module.exports = router;

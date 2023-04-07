@@ -2,9 +2,50 @@
 
   <h1>Bird Watching Page</h1>
 
-<!--<<<<<<< HEAD-->
-  <input type="button" onclick="registerPage()" value="Log In/Sign Up" />
-  <input type="button" onclick="addSighting()" value="Add a sighting" />
+
+<body>
+  <!--<<<<<<< HEAD-->
+<!--  <input type="button" onclick="registerPage()" value="Log In/Sign Up" />-->
+  <!--</body>-->
+  <!-- Wrap buttons in a div with the class 'button-container' -->
+  <div class="button-container">
+    <input type="button" onclick="registerPage()" value="Log In/Sign Up" />
+  </div>
+
+
+  <div class="p-5">
+    <table class="table">
+      <thead>
+      <tr>
+        <th scope="col">DateTime</th>
+        <th scope="col">Location</th>
+        <th scope="col">Description</th>
+        <th scope="col">Identification</th>
+        <th scope="col">photo</th>
+        <th scope="col">Nickname</th>
+        <th scope="col">Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr>
+        <td>2023-03-01</td>
+        <td>Mock Location</td>
+        <td>Mock Description</td>
+        <td>Unknown</td>
+        <td><img class="bird-thumbnail" src="images/bird.jpg"></td>
+        <td>Bob</td>
+        <td>
+          <a href="detail" class="btn btn-primary btn-sm">Details</a>
+          <a type="button" class="btn btn-primary btn-sm">Comments</a>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="button-container">
+    <input type="button" onclick="addSighting()" value="Add a sighting" />
+  </div>
 </body>
 
 
@@ -34,5 +75,6 @@
   <!--    navigator.serviceWorker.register('/sw.js', { scope: '/' });-->
   <!--  }-->
   <!--</script>-->
+
 <%- include('footer'); -%>
 <!--&gt;>>>>>> origin/Zhonghao-->

@@ -116,9 +116,9 @@ app.get('/dashboard', ensureAuthenticated, (req, res) => {
   // Your dashboard route logic here
 });
 
-app.get('/list', (req, res) => {
-  res.render("list", { title: 'Bird List Page' });
-});
+// app.get('/', (req, res) => {
+//   res.render("list", { title: 'Bird List Page' });
+// });
 
 app.get('/detail', (req, res) => {
   res.render("detail", { title: 'Bird Detail Page' });
