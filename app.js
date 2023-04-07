@@ -81,28 +81,9 @@ app.post('/users/register', async (req, res) => {
   const { username, password } = req.body;
   const newUser = new User({ username, password });
   await newUser.save();
-// <<<<<<< HEAD
   console.log(`Registered new user with username '${username}'`);
   res.redirect('/users/login');
-// =======
-//   res.redirect('/login');
-// >>>>>>> origin/Zhonghao
 });
-
-// // Add Sighting route
-// app.post('/add_sighting', async (req, res) => {
-//   try {
-//     console.log("****")
-//     const newSighting = new Sighting(req.body);
-//     await newSighting.save();
-//     console.log("Sighting added successfully");
-//     res.redirect('/');
-//   } catch (error) {
-//     console.log("!!!!")
-//     console.error("Error adding sighting", error);
-//     res.status(400).json({ message: 'Error adding sighting', error });
-//   }
-// });
 
 // Login route
 app.post('/users/login', passport.authenticate('local', {
@@ -116,14 +97,6 @@ app.get('/dashboard', ensureAuthenticated, (req, res) => {
   // Your dashboard route logic here
 });
 
-// app.get('/', (req, res) => {
-//   res.render("list", { title: 'Bird List Page' });
-// });
-
-app.get('/detail', (req, res) => {
-  res.render("detail", { title: 'Bird Detail Page' });
-});
-
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
     return next();
@@ -132,7 +105,7 @@ function ensureAuthenticated(req, res, next) {
   res.redirect('/users/login');
 }
 
-// Catch 404 and forward to error handler
+// Catch 404 and forward to error handler - *** does this need adding in again for error handling?
 
 // app.use(function(req, res, next) {
 //   console.log(`404 error: ${req.url}`);
