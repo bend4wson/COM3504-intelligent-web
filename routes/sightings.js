@@ -6,9 +6,16 @@ const Users = require("../databases/users");
 const multer = require('multer');
 const upload = multer({ storage: multer.memoryStorage() });
 
-router.get('/', async (req, res) => {
-    res.render('index', { title: 'Bird Watching Page' });
-});
+// router.get('/', async (req, res) => {
+//     // res.render('index', { title: 'Bird Watching Page' });
+//     try {
+//         const sightings = await Sighting.find();
+//         res.render('index', { sightings });
+//     } catch (error) {
+//         console.error('Error fetching sightings:', error);
+//         res.status(500).send('Internal Server Error');
+//     }
+// });
 
 router.post('/add_sighting', upload.single('picture'), async (req, res) => {
     try {
