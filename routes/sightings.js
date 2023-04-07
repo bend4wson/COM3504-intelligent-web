@@ -7,13 +7,11 @@ const multer = require('multer');
 const upload = multer({ storage: multer.memoryStorage() });
 
 router.get('/', async (req, res) => {
-    console.log("!!");
     res.render('index', { title: 'Bird Watching Page' });
 });
 
 router.post('/add_sighting', upload.single('picture'), async (req, res) => {
     try {
-        console.log("1");
 
         const newSightingData = {
             type: req.body.type,
@@ -32,7 +30,6 @@ router.post('/add_sighting', upload.single('picture'), async (req, res) => {
         }
 
         const newSighting = new Sighting(newSightingData);
-        console.log("2");
         await newSighting.save();
         console.log("Sighting added successfully");
         res.redirect('/');
@@ -43,7 +40,6 @@ router.post('/add_sighting', upload.single('picture'), async (req, res) => {
 });
 
 router.get('/add_sighting', function(req, res, next) {
-    console.log("**");
     res.render('addSighting', { title: 'Add a new Sighting' });
 });
 

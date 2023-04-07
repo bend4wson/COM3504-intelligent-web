@@ -1,12 +1,4 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title><%= title %></title>
-        <link rel='stylesheet' href='/stylesheets/style.css' />
-        <link rel="manifest" href="/manifest.json">
-    </head>
-
-    <body>
+<%- include('header'); -%>
         <h1>Add your sighting below:</h1>
 
         <form id="sightingForm" action="/sightings/add_sighting" method="post" enctype="multipart/form-data">
@@ -49,4 +41,5 @@
     }
 </script>
 
+<%- include('footer'); -%>
 </html>
