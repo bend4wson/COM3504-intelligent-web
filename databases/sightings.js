@@ -7,6 +7,8 @@ const sightingSchema = new mongoose.Schema({
         lat: Number,
         lng: Number,
     },
+    lat: Number,
+    lng: Number,
     picture: {
         data: Buffer,
         contentType: String,
