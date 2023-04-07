@@ -1,4 +1,7 @@
 <%- include('header'); -%>
+<!--<link rel="manifest" href="/manifest.json">-->
+<script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+<script src="/javascripts/index.js"></script>
 <div class="p-5">
     <div class="container">
         <div class="row">
@@ -19,8 +22,74 @@
                 Comments
             </div>
             <div class="card-body">
-                <h5 class="card-title">User comment</h5>
-                <p class="card-text">2023-03-01 10:00:00</p>
+
+<!--                <div id="initial_form" style="display: block">-->
+<!--                    <p>Please insert the id of the Room you want to Join, if you do not have a room id, click Generate Room</p>-->
+<!--                    <form onsubmit="return false;">-->
+<!--                        <p><label for="name"> Your name </label>-->
+<!--                            <input type="text" id="name" name="name">-->
+<!--                        </p>-->
+<!--                        <p>-->
+<!--                            <label for="roomNo"> Your room </label>-->
+<!--                            <input type="text" id="roomNo" name="roomNo">-->
+<!--                            <button id="roomNoGenerator" onclick="generateRoom()">Generate Room</button>-->
+<!--                        </p>-->
+<!--                        <button id="connect" onclick="connectToRoom()">Connect</button>-->
+<!--                    </form>-->
+<!--                </div>-->
+<!--                <div id="chat_interface" style="display: none">-->
+<!--                    <div>-->
+<!--                        <div id="who_you_are" style="display: inline"></div>, you are in room: <div id="in_room" style="display: inline"></div>-->
+<!--                    </div>-->
+<!--                    <div id="history" class="boxed"></div>-->
+<!--                    <div id="input" class="bottom boxed">-->
+<!--                        <form onsubmit="return false;" style="width: 100%">-->
+<!--                            <p>-->
+<!--                                <label for="name"> chat: </label>-->
+<!--                                <input type="text" id="chat_input" name="chat_input" style="width: 80%">-->
+<!--                                <button id="chat_send" onclick="sendChatText()">Send</button>-->
+<!--                            </p>-->
+<!--                        </form>-->
+<!--                    </div>-->
+<!--                </div>-->
+
+<!--                <div class="col">-->
+<!--                    <h3>Location</h3>-->
+<!--                    <p>Mock Location xxx</p>-->
+
+<!--                    <h3>Description</h3>-->
+<!--                    <p>There are 12 template columns available per row, allowing you to create different combinations of elements that span any number of columns. Column classes indicate the number of template columns to span (e.g., col-4 spans four). widths are set in percentages so you always have the same relative sizing.</p>-->
+<!--                </div>-->
+<!--                <h5 class="card-title">User comment</h5>-->
+<!--                <p class="card-text">2023-03-01 10:00:00</p>-->
+                <button id="chat_button" onclick="connectToRoom(); showChatInterface();">Chat</button>
+
+                <div id="chat_interface" style="display:none;">
+
+                    <div>
+<!--                        <div id="who_you_are" style="display: inline"></div>, you are in room: <div id="in_room" style="display: inline"></div>-->
+                    </div>
+                    <div id="history" class="boxed"></div>
+                    <div id="input" class="bottom boxed">
+                        <form onsubmit="return false;" style="width: 100%">
+                            <p>
+
+                                <label for="name"> chat: </label>
+                                <input type="text" id="chat_input" name="chat_input" style="width: 80%">
+                                <button id="chat_send" onclick="sendChatText()">Send</button>
+                            </p>
+                        </form>
+                    </div>
+                </div>
+
+<!--                <script>-->
+<!--                    function showChatInterface() {-->
+<!--                        var chatButton = document.getElementById("chat_button");-->
+<!--                        var chatInterface = document.getElementById("chat_interface");-->
+<!--                        chatButton.style.display = "none";-->
+<!--                        chatInterface.style.display = "block";-->
+<!--                    }-->
+<!--                </script>-->
             </div>
         </div>
     </div>
