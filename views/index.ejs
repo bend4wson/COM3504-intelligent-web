@@ -1,35 +1,83 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title><%= title %></title>
-  <link rel='stylesheet' href='/stylesheets/style.css' />
-  <link rel="manifest" href="/manifest.json">
-</head>
+<%- include('header'); -%>
 
-<body>
-  <h1>Bird Watching Page</h1>
+  <div class="d-flex flex-wrap p-2 p-md-5">
+    <div class="card mb-3 mx-md-2 mx-auto" style="width: 22rem;">
+      <img src="/images/bird.jpg" class="card-img-top" alt="bird">
+      <div class="card-body">
+        <h5 class="card-title">Sparrow</h5>
+        <h6 class="card-subtitle mb-2 text-body-secondary">1638 Steve Irwin Way, Beerwah QLD 4519, Australia</h6>
+        <h6 class="card-subtitle mb-2 text-body-secondary">2023-03-01 10:20:31</h6>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <a href="detail" class="btn btn-primary">Details</a>
+        <a href="detail" class="btn btn-primary">Comments</a>
+      </div>
+    </div>
+    <div class="card mb-3 mx-md-2 mx-auto" style="width: 22rem;">
+      <img src="/images/bird.jpg" class="card-img-top" alt="bird">
+      <div class="card-body">
+        <h5 class="card-title">Sparrow</h5>
+        <h6 class="card-subtitle mb-2 text-body-secondary">1638 Steve Irwin Way, Beerwah QLD 4519, Australia</h6>
+        <h6 class="card-subtitle mb-2 text-body-secondary">2023-03-01 10:20:31</h6>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <a href="detail" class="btn btn-primary">Details</a>
+        <a href="detail" class="btn btn-primary">Comments</a>
+      </div>
+    </div>
+    <div class="card mb-3 mx-md-2 mx-auto" style="width: 22rem;">
+      <img src="/images/bird.jpg" class="card-img-top" alt="bird">
+      <div class="card-body">
+        <h5 class="card-title">Sparrow</h5>
+        <h6 class="card-subtitle mb-2 text-body-secondary">1638 Steve Irwin Way, Beerwah QLD 4519, Australia</h6>
+        <h6 class="card-subtitle mb-2 text-body-secondary">2023-03-01 10:20:31</h6>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <a href="detail" class="btn btn-primary">Details</a>
+        <a href="detail" class="btn btn-primary">Comments</a>
+      </div>
+    </div>
+    <div class="card mb-3 mx-md-2 mx-auto" style="width: 22rem;">
+      <img src="/images/bird.jpg" class="card-img-top" alt="bird">
+      <div class="card-body">
+        <h5 class="card-title">Sparrow</h5>
+        <h6 class="card-subtitle mb-2 text-body-secondary">1638 Steve Irwin Way, Beerwah QLD 4519, Australia</h6>
+        <h6 class="card-subtitle mb-2 text-body-secondary">2023-03-01 10:20:31</h6>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <a href="detail" class="btn btn-primary">Details</a>
+        <a href="detail" class="btn btn-primary">Comments</a>
+      </div>
+    </div>
+    <div class="card mb-3 mx-md-2 mx-auto" style="width: 22rem;">
+      <img src="/images/bird.jpg" class="card-img-top" alt="bird">
+      <div class="card-body">
+        <h5 class="card-title">Sparrow</h5>
+        <h6 class="card-subtitle mb-2 text-body-secondary">1638 Steve Irwin Way, Beerwah QLD 4519, Australia</h6>
+        <h6 class="card-subtitle mb-2 text-body-secondary">2023-03-01 10:20:31</h6>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <a href="detail" class="btn btn-primary">Details</a>
+        <a href="detail" class="btn btn-primary">Comments</a>
+      </div>
+    </div>
+    <div class="card mb-3 mx-md-2 mx-auto" style="width: 22rem;">
+      <img src="/images/bird.jpg" class="card-img-top" alt="bird">
+      <div class="card-body">
+        <h5 class="card-title">Sparrow</h5>
+        <h6 class="card-subtitle mb-2 text-body-secondary">1638 Steve Irwin Way, Beerwah QLD 4519, Australia</h6>
+        <h6 class="card-subtitle mb-2 text-body-secondary">2023-03-01 10:20:31</h6>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <a href="detail" class="btn btn-primary">Details</a>
+        <a href="detail" class="btn btn-primary">Comments</a>
+      </div>
+    </div>
+    <div class="card mb-3 mx-md-2 mx-auto" style="width: 22rem;">
+      <img src="/images/bird.jpg" class="card-img-top" alt="bird">
+      <div class="card-body">
+        <h5 class="card-title">Sparrow</h5>
+        <h6 class="card-subtitle mb-2 text-body-secondary">1638 Steve Irwin Way, Beerwah QLD 4519, Australia</h6>
+        <h6 class="card-subtitle mb-2 text-body-secondary">2023-03-01 10:20:31</h6>
+        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <a href="detail" class="btn btn-primary">Details</a>
+        <a href="detail" class="btn btn-primary">Comments</a>
+      </div>
+    </div>
+  </div>
 
-  <input type="button" onclick="registerPage()" value="Log In/Sign Up" />
-  <input type="button" onclick="addSighting()" value="Add a sighting" />
-</body>
-
-
-<script>
-  function registerPage(){
-    window.location.href = "/register";
-  }
-
-  function addSighting(){
-    window.location.href = "/add_sighting";
-  }
-</script>
-<!--<script src="/javascripts/converter.js"></script>-->
-<!--<script>-->
-<!--  if('serviceWorker' in navigator) {-->
-<!--    navigator.serviceWorker.register('/sw.js', { scope: '/' });-->
-<!--  }-->
-<!--</script>-->
-
-
-</html>
-
+<%- include('footer'); -%>

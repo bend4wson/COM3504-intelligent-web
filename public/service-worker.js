@@ -22,6 +22,7 @@ let filesToCache = [
     '/stylesheets/bootstrap.min.css',
     '/stylesheets/style.css',
     '/stylesheets/main.css',
+    'stylesheets/index.css', //Added to style the login/sign up and add sightings buttons on index.ejs
     '/images/bird.jpg',
     '/images/temperature.png',
     '/favicon.ico'
