@@ -1,16 +1,54 @@
 const express = require('express');
 const router = express.Router();
 const Sighting = require('../databases/sightings');
+const Users = require("../databases/users");
 
-// Example endpoint to create a new sighting
-router.post('/create', async (req, res) => {
+const multer = require('multer');
+const upload = multer({ storage: multer.memoryStorage() });
+
+router.get('/', async (req, res) => {
+    res.render('index', { title: 'Bird Watching Page' });
+});
+
+router.post('/add_sighting', upload.single('picture'), async (req, res) => {
     try {
-        const newSighting = new Sighting(req.body);
+
+        const newSightingData = {
+            type: req.body.type,
+            description: req.body.description,
+            location: {
+                lat: req.body.lat,
+                lng: req.body.lng,
+            },
+        };
+
+        if (req.file) {
+            newSightingData.picture = {
+                data: req.file.buffer,
+                contentType: req.file.mimetype,
+            };
+        }
+
+        const newSighting = new Sighting(newSightingData);
         await newSighting.save();
-        res.status(201).json({ message: 'Sighting added successfully', data: newSighting });
+        console.log("Sighting added successfully");
+        res.redirect('/');
     } catch (error) {
+        console.error("Error adding sighting", error);
         res.status(400).json({ message: 'Error adding sighting', error });
     }
+});
+
+router.get('/add_sighting', function(req, res, next) {
+    res.render('addSighting', { title: 'Add a new Sighting' });
+});
+
+// router.get('/', (req, res) => {
+//     res.render("list", { title: 'Bird List Page' });
+// });
+
+router.get('/detail', (req, res) => {
+    res.render("detail", { title: 'Bird Detail Page' });
 });
 
 module.exports = router;

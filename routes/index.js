@@ -8,16 +8,22 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Bird Watching Page' });
 });
 
+// <<<<<<< HEAD
+
+//This needs implementing if we're doing a dashboard page
+router.get('/dashboard', function(req, res, next) {
+  res.render('index', {title: 'Bird Watching Page'});
+});
+
+
+// =======
 router.get('/register', function(req, res, next) {
   res.render('register', { title: 'Registration Page' });
 });
 
 router.get('/login', function(req, res, next) {
   res.render('login', { title: 'Login Page' });
-});
-
-router.get('/add_sighting', function(req, res, next) {
-  res.render('addSighting', { title: 'Add a new Sighting' });
+// >>>>>>> origin/Zhonghao
 });
 
 module.exports = router;
