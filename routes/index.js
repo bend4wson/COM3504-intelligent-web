@@ -18,8 +18,19 @@ var router = express.Router();
 // });
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Bird Watching Page' });
+// router.get('/', function(req, res, next) {
+//   const sightings = await Sighting.find();
+//   res.render('index', { title: 'Bird Watching Page' , sightings});
+// });
+
+router.get('/', async (req, res) => {
+  try {
+    const sightings = await Sighting.find();
+    res.render('index', { title: 'Bird Watching Page', sightings });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error fetching data from the database');
+  }
 });
 
 

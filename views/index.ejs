@@ -11,30 +11,52 @@
 
 <div class="p-5">
   <table class="table">
-    <thead>
-    <tr>
-      <th scope="col">DateTime</th>
-      <th scope="col">Location</th>
-      <th scope="col">Description</th>
-      <th scope="col">Identification</th>
-      <th scope="col">photo</th>
-      <th scope="col">Nickname</th>
-      <th scope="col">Actions</th>
-    </tr>
-    </thead>
+<!--    <thead>-->
+<!--    <tr>-->
+<!--      <th scope="col">DateTime</th>-->
+<!--      <th scope="col">Location</th>-->
+<!--      <th scope="col">Description</th>-->
+<!--      <th scope="col">Identification</th>-->
+<!--      <th scope="col">photo</th>-->
+<!--      <th scope="col">Nickname</th>-->
+<!--      <th scope="col">Actions</th>-->
+<!--    </tr>-->
+<!--    </thead>-->
+<!--    <tbody>-->
+<!--    <tr>-->
+<!--      <td>2023-03-01</td>-->
+<!--      <td>Mock Location</td>-->
+<!--      <td>Mock Description</td>-->
+<!--      <td>Unknown</td>-->
+<!--      <td><img class="bird-thumbnail" src="images/bird.jpg"></td>-->
+<!--      <td>Bob</td>-->
+<!--      <td>-->
+<!--        <a href="detail" class="btn btn-primary btn-sm">Details</a>-->
+<!--        <a type="button" class="btn btn-primary btn-sm">Comments</a>-->
+<!--      </td>-->
+<!--    </tr>-->
+<!--    </tbody>-->
     <tbody>
-    <tr>
-      <td>2023-03-01</td>
-      <td>Mock Location</td>
-      <td>Mock Description</td>
-      <td>Unknown</td>
-      <td><img class="bird-thumbnail" src="images/bird.jpg"></td>
-      <td>Bob</td>
-      <td>
-        <a href="detail" class="btn btn-primary btn-sm">Details</a>
-        <a type="button" class="btn btn-primary btn-sm">Comments</a>
-      </td>
-    </tr>
+    <% sightings.forEach(sighting => { %>
+      <tr>
+        <td><%= sighting.createdAt ? sighting.createdAt.toISOString().split('T')[0] : '' %></td>
+        <td><%= sighting.location ? `(${sighting.location.lat}, ${sighting.location.lng})` : 'Unknown' %></td>
+        <td><%= sighting.description || 'Unknown' %></td>
+        <td><%= sighting.type || 'Unknown' %></td>
+        <td>
+          <% if (sighting.picture && sighting.picture.data) { %>
+            <img class="bird-thumbnail" src="data:<%= sighting.picture.contentType %>;base64,<%= sighting.picture.data.toString('base64') %>" />
+          <% } else { %>
+            <span>No image</span>
+          <% } %>
+        </td>
+        <td>Bob</td> <!-- Assuming the 'Nickname' field is not present in the schema -->
+        <td>
+          <a href="detail" class="btn btn-primary btn-sm">Details</a>
+          <a type="button" class="btn btn-primary btn-sm">Comments</a>
+        </td>
+      </tr>
+    <% }) %>
     </tbody>
   </table>
 </div>

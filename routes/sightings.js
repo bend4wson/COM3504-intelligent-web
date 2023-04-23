@@ -53,7 +53,7 @@ const upload = multer({ storage: multer.memoryStorage() });
 
 router.get('/', async (req, res) => {
     console.log("!!");
-    res.render('index', { title: 'Bird Watching Page' });
+    res.render('index', { title: 'Bird Watching Page' , sightings});
 });
 
 // router.post('/add_sighting', async (req, res) => {
