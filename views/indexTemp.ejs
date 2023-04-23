@@ -1,0 +1,88 @@
+<%- include('header'); -%>
+
+<h1>Bird Watching Page</h1>
+
+
+<body>
+<!--<<<<<<< HEAD-->
+<!--  <input type="button" onclick="registerPage()" value="Log In/Sign Up" />-->
+<!--</body>-->
+<!-- Wrap buttons in a div with the class 'button-container' -->
+<div class="button-container">
+    <input type="button" onclick="registerPage()" value="Log In/Sign Up" />
+</div>
+
+
+<div class="p-5">
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Time of Entry</th>
+            <th scope="col">Description</th>
+            <th scope="col">Location</th>
+            <th scope="col">Identification</th>
+            <th scope="col">Photo</th>
+            <th scope="col">Actions</th>
+            <!--        <th scope="col">Nickname</th>-->
+            <!--        <th scope="col">Actions</th>-->
+        </tr>
+        </thead>
+        <tbody>
+        <% sightings.forEach(sighting => { %>
+            <tr>
+                <td><%= sighting.createdAt ? sighting.createdAt.toISOString().slice(0, 10) : 'N/A' %></td>
+                <td><%= sighting.description || 'N/A' %></td>
+                <td><%= sighting.location ? `${sighting.location.lat}, ${sighting.location.lng}` : 'N/A' %></td>
+                <td><%= sighting.type || 'Unknown' %></td>
+                <td>
+                    <% if (sighting.picture && sighting.picture.data) { %>
+                        <img class="bird-thumbnail" src="data:<%= sighting.picture.contentType %>;base64,<%= sighting.picture.data.toString('base64') %>">
+                    <% } else { %>
+                        <span>N/A</span>
+                    <% } %>
+                </td>
+                <td>
+                    <a href="detail" class="btn btn-primary btn-sm">Details</a>
+                    <a type="button" class="btn btn-primary btn-sm">Comments</a>
+                </td>
+            </tr>
+        <% }); %>
+        </tbody>
+    </table>
+</div>
+
+<div class="button-container">
+    <input type="button" onclick="addSighting()" value="Add a sighting" />
+</div>
+</body>
+
+
+<script>
+    function registerPage(){
+        window.location.href = "/users/register";
+    }
+
+    function addSighting(){
+        window.location.href = "/sightings/add_sighting";
+    }
+</script>
+<!--<script src="/javascripts/converter.js"></script>-->
+<!--<script>-->
+<!--  if('serviceWorker' in navigator) {-->
+<!--    navigator.serviceWorker.register('/sw.js', { scope: '/' });-->
+<!--  }-->
+<!--</script>-->
+
+
+</html>
+
+<!--=======-->
+<!--<script src="/javascripts/converter.js"></script>-->
+<!--<script>-->
+<!--  if('serviceWorker' in navigator) {-->
+<!--    navigator.serviceWorker.register('/sw.js', { scope: '/' });-->
+<!--  }-->
+<!--</script>-->
+
+<%- include('footer'); -%>
+<!--&gt;>>>>>> origin/Zhonghao-->

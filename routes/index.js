@@ -5,16 +5,21 @@ const Sighting = require("../databases/sightings");
 var router = express.Router();
 
 /* GET users listing. */
-router.get('/', async (req, res) => {
-  // res.render('index', { title: 'Bird Watching Page' });
-  // console.log("******")
-  try {
-    const sightings = await Sighting.find();
-    res.render('index', { sightings });
-  } catch (error) {
-    console.error('Error fetching sightings:', error);
-    res.status(500).send('Internal Server Error');
-  }
+// router.get('/', async (req, res) => {
+//   // res.render('index', { title: 'Bird Watching Page' });
+//   // console.log("******")
+//   try {
+//     const sightings = await Sighting.find();
+//     res.render('index', { sightings });
+//   } catch (error) {
+//     console.error('Error fetching sightings:', error);
+//     res.status(500).send('Internal Server Error');
+//   }
+// });
+
+/* GET users listing. */
+router.get('/', function(req, res, next) {
+  res.render('index', { title: 'Bird Watching Page' });
 });
 
 
