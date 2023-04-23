@@ -16,6 +16,8 @@ const usersRouter = require('./routes/users');
 const sightingsRouter = require('./routes/sightings');
 const Sighting = require("./databases/sightings");
 
+const mongoose = require("./databases/database");
+
 const app = express();
 
 // view engine setup

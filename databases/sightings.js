@@ -13,7 +13,10 @@ const sightingSchema = new mongoose.Schema({
         data: Buffer,
         contentType: String,
     },
-});
+}, {
+      timestamps: true
+  }
+);
 
 const Sighting = mongoose.model('Sighting', sightingSchema);
 

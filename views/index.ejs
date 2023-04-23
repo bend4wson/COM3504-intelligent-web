@@ -1,83 +1,19 @@
 <%- include('header'); -%>
 
   <div class="d-flex flex-wrap p-2 p-md-5">
-    <div class="card mb-3 mx-md-2 mx-auto" style="width: 22rem;">
-      <img src="/images/bird.jpg" class="card-img-top" alt="bird">
-      <div class="card-body">
-        <h5 class="card-title">Sparrow</h5>
-        <h6 class="card-subtitle mb-2 text-body-secondary">1638 Steve Irwin Way, Beerwah QLD 4519, Australia</h6>
-        <h6 class="card-subtitle mb-2 text-body-secondary">2023-03-01 10:20:31</h6>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="detail" class="btn btn-primary">Details</a>
-        <a href="detail" class="btn btn-primary">Comments</a>
+    <% birds.forEach(function(bird){ %>
+      <div class="card mb-3 mx-md-2 mx-auto" style="width: 22rem;">
+        <img src="<%- bird.picture  %>" class="card-img-top" alt="bird">
+        <div class="card-body">
+          <h5 class="card-title"><%- bird.type %></h5>
+          <h6 class="card-subtitle mb-2 text-body-secondary"><%- bird.location.lat  %>, <%- bird.location.lng  %></h6>
+          <h6 class="card-subtitle mb-2 text-body-secondary"><%- new Date(bird.createdAt).toLocaleString()  %></h6>
+          <p class="card-text"><%- bird.description %></p>
+          <a href="detail" class="btn btn-primary">Details</a>
+          <a href="detail" class="btn btn-primary">Comments</a>
+        </div>
       </div>
-    </div>
-    <div class="card mb-3 mx-md-2 mx-auto" style="width: 22rem;">
-      <img src="/images/bird.jpg" class="card-img-top" alt="bird">
-      <div class="card-body">
-        <h5 class="card-title">Sparrow</h5>
-        <h6 class="card-subtitle mb-2 text-body-secondary">1638 Steve Irwin Way, Beerwah QLD 4519, Australia</h6>
-        <h6 class="card-subtitle mb-2 text-body-secondary">2023-03-01 10:20:31</h6>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="detail" class="btn btn-primary">Details</a>
-        <a href="detail" class="btn btn-primary">Comments</a>
-      </div>
-    </div>
-    <div class="card mb-3 mx-md-2 mx-auto" style="width: 22rem;">
-      <img src="/images/bird.jpg" class="card-img-top" alt="bird">
-      <div class="card-body">
-        <h5 class="card-title">Sparrow</h5>
-        <h6 class="card-subtitle mb-2 text-body-secondary">1638 Steve Irwin Way, Beerwah QLD 4519, Australia</h6>
-        <h6 class="card-subtitle mb-2 text-body-secondary">2023-03-01 10:20:31</h6>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="detail" class="btn btn-primary">Details</a>
-        <a href="detail" class="btn btn-primary">Comments</a>
-      </div>
-    </div>
-    <div class="card mb-3 mx-md-2 mx-auto" style="width: 22rem;">
-      <img src="/images/bird.jpg" class="card-img-top" alt="bird">
-      <div class="card-body">
-        <h5 class="card-title">Sparrow</h5>
-        <h6 class="card-subtitle mb-2 text-body-secondary">1638 Steve Irwin Way, Beerwah QLD 4519, Australia</h6>
-        <h6 class="card-subtitle mb-2 text-body-secondary">2023-03-01 10:20:31</h6>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="detail" class="btn btn-primary">Details</a>
-        <a href="detail" class="btn btn-primary">Comments</a>
-      </div>
-    </div>
-    <div class="card mb-3 mx-md-2 mx-auto" style="width: 22rem;">
-      <img src="/images/bird.jpg" class="card-img-top" alt="bird">
-      <div class="card-body">
-        <h5 class="card-title">Sparrow</h5>
-        <h6 class="card-subtitle mb-2 text-body-secondary">1638 Steve Irwin Way, Beerwah QLD 4519, Australia</h6>
-        <h6 class="card-subtitle mb-2 text-body-secondary">2023-03-01 10:20:31</h6>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="detail" class="btn btn-primary">Details</a>
-        <a href="detail" class="btn btn-primary">Comments</a>
-      </div>
-    </div>
-    <div class="card mb-3 mx-md-2 mx-auto" style="width: 22rem;">
-      <img src="/images/bird.jpg" class="card-img-top" alt="bird">
-      <div class="card-body">
-        <h5 class="card-title">Sparrow</h5>
-        <h6 class="card-subtitle mb-2 text-body-secondary">1638 Steve Irwin Way, Beerwah QLD 4519, Australia</h6>
-        <h6 class="card-subtitle mb-2 text-body-secondary">2023-03-01 10:20:31</h6>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="detail" class="btn btn-primary">Details</a>
-        <a href="detail" class="btn btn-primary">Comments</a>
-      </div>
-    </div>
-    <div class="card mb-3 mx-md-2 mx-auto" style="width: 22rem;">
-      <img src="/images/bird.jpg" class="card-img-top" alt="bird">
-      <div class="card-body">
-        <h5 class="card-title">Sparrow</h5>
-        <h6 class="card-subtitle mb-2 text-body-secondary">1638 Steve Irwin Way, Beerwah QLD 4519, Australia</h6>
-        <h6 class="card-subtitle mb-2 text-body-secondary">2023-03-01 10:20:31</h6>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-        <a href="detail" class="btn btn-primary">Details</a>
-        <a href="detail" class="btn btn-primary">Comments</a>
-      </div>
-    </div>
+    <% }); %>
   </div>
 
 <%- include('footer'); -%>
