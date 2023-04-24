@@ -10,7 +10,6 @@
 
 
 <div class="p-5">
-  <table class="table">
 <!--    <thead>-->
 <!--    <tr>-->
 <!--      <th scope="col">DateTime</th>-->
@@ -36,35 +35,32 @@
 <!--      </td>-->
 <!--    </tr>-->
 <!--    </tbody>-->
-    <tbody>
-    <% sightings.forEach(sighting => { %>
-      <tr>
-        <td><%= sighting.createdAt ? sighting.createdAt.toISOString().split('T')[0] : '' %></td>
-        <td><%= sighting.location ? `(${sighting.location.lat}, ${sighting.location.lng})` : 'Unknown' %></td>
-        <td><%= sighting.description || 'Unknown' %></td>
-        <td><%= sighting.type || 'Unknown' %></td>
-        <td>
-          <% if (sighting.picture && sighting.picture.data) { %>
-            <img class="bird-thumbnail" src="data:<%= sighting.picture.contentType %>;base64,<%= sighting.picture.data.toString('base64') %>" />
-          <% } else { %>
-            <span>No image</span>
-          <% } %>
-        </td>
-        <td>Bob</td> <!-- Assuming the 'Nickname' field is not present in the schema -->
-        <td>
-          <a href="detail" class="btn btn-primary btn-sm">Details</a>
-          <a type="button" class="btn btn-primary btn-sm">Comments</a>
-        </td>
-      </tr>
-    <% }) %>
-    </tbody>
-  </table>
+
+        <div class="d-flex flex-wrap p-2 p-md-5">
+            <% sightings.forEach(function(sighting){ %>
+                <div class="card mb-3 mx-md-2 mx-auto" style="width: 22rem;">
+                    <% if (sighting.picture && sighting.picture.data) { %>
+                        <img class="bird-thumbnail" src="data:<%= sighting.picture.contentType %>;base64,<%= sighting.picture.data.toString('base64') %>" />
+                    <% } else { %>
+                        <span>No image</span>
+                    <% } %>
+                    <div class="card-body">
+                        <h5 class="card-title"><%- sighting.type %></h5>
+                        <h6 class="card-subtitle mb-2 text-body-secondary"><%- sighting.location.lat  %>, <%- sighting.location.lng  %></h6>
+                        <p class="card-text"><%- sighting.description %></p>
+                        <a href="detail" class="btn btn-primary">Details</a>
+                        <a href="detail" class="btn btn-primary">Comments</a>
+                    </div>
+                </div>
+            <% }) %>
+        </div>
 </div>
 
 <div class="button-container">
   <input type="button" onclick="addSighting()" value="Add a sighting" />
 </div>
 </body>
+
 
 
 <script>
