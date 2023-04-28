@@ -5,10 +5,15 @@
         <h1>Add your sighting below:</h1>
 
         <form id="sightingForm" action="/sightings/add_sighting" method="post" enctype="multipart/form-data">
+<!--            <div class="mb-3">-->
+<!--                <label class="form-label" for="type">Type:</label>-->
+<!--                <input class="form-control" type="text" name="type" id="type" required />-->
+<!--            </div>-->
             <div class="mb-3">
                 <label class="form-label" for="type">Type:</label>
-                <input class="form-control" type="text" name="type" id="type" required />
+                <select class="form-control" name="type" id="type" required></select>
             </div>
+
             <div class="mb-3">
                 <label class="form-label" for="description">Description:</label>
                 <input class="form-control" type="text" name="description" id="description" required />
@@ -59,10 +64,68 @@
         }
     }
 
+    async function fetchBirdTypes() {
+        const sparqlQuery = `
+    PREFIX dbo: <http://dbpedia.org/ontology/>
+    PREFIX dbr: <http://dbpedia.org/resource/>
+    SELECT DISTINCT ?bird ?birdLabel
+    WHERE {
+        dbr:Bird dbo:wikiPageWikiLink ?bird .
+        ?bird rdfs:label ?birdLabel .
+        FILTER(lang(?birdLabel) = "en") .
+    }
+    LIMIT 1000
+    `;
+        const url = "https://dbpedia.org/sparql?query=" + encodeURIComponent(sparqlQuery) + "&format=json";
+
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
+            return data.results.bindings;
+        } catch (error) {
+            console.error("Error fetching bird names:", error);
+            return [];
+        }
+    }
+
+
+    function populateBirdTypesDropdown(birdTypes) {
+        // Sort the birdTypes array alphabetically by birdLabel value
+        birdTypes.sort((a, b) => {
+            if (a.birdLabel.value < b.birdLabel.value) return -1;
+            if (a.birdLabel.value > b.birdLabel.value) return 1;
+            return 0;
+        });
+
+        const dropdown = document.getElementById("type");
+
+        // Create the "Unknown" option and set it as the default choice
+        const unknownOption = document.createElement("option");
+        unknownOption.value = "unknown";
+        unknownOption.textContent = "Unknown";
+        unknownOption.selected = true;
+        dropdown.appendChild(unknownOption);
+
+        birdTypes.forEach((birdType) => {
+            const option = document.createElement("option");
+            option.value = option.textContent = birdType.birdLabel.value;
+            dropdown.appendChild(option);
+        });
+    }
+
+
+
+
 
 
     // Call getLocation when the page loads
-    window.addEventListener('DOMContentLoaded', getLocation);
+    // window.addEventListener('DOMContentLoaded', getLocation);
+
+    window.addEventListener('DOMContentLoaded', async () => {
+        const birdTypes = await fetchBirdTypes();
+        populateBirdTypesDropdown(birdTypes);
+        getLocation();
+    });
 </script>
 <script>
     function formSubmission(){

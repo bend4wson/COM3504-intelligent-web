@@ -92,3 +92,39 @@ function hideLoginInterface(room, userId) {
     document.getElementById('in_room').innerHTML= ' '+room;
 }
 
+
+
+// async function fetchBirdTypes() {
+//     const sparqlQuery = `
+//     PREFIX dbo: <http://dbpedia.org/ontology/>
+//     PREFIX dbr: <http://dbpedia.org/resource/>
+//     SELECT DISTINCT ?about
+//     WHERE {
+//         dbr:Bird dbo:wikiPageWikiLink ?resource .
+//         ?resource dbo:abstract ?about .
+//         FILTER(lang(?about) = "en") .
+//     }
+//     LIMIT 100
+//     `;
+//     const url = "https://dbpedia.org/sparql?query=" + encodeURIComponent(sparqlQuery) + "&format=json";
+//
+//     try {
+//         const response = await fetch(url);
+//         const data = await response.json();
+//         return data.results.bindings;
+//     } catch (error) {
+//         console.error("Error fetching bird types:", error);
+//         return [];
+//     }
+// }
+//
+// function populateBirdTypesDropdown(birdTypes) {
+//     const dropdown = document.getElementById("type");
+//     birdTypes.forEach((birdType) => {
+//         const option = document.createElement("option");
+//         option.value = option.textContent = birdType.about.value;
+//         dropdown.appendChild(option);
+//     });
+// }
+
+
