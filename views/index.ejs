@@ -36,7 +36,11 @@
 <!--    </tr>-->
 <!--    </tbody>-->
 
-        <div class="d-flex flex-wrap p-2 p-md-5">
+<!--    <button id="sortButton" onclick="sortSightings()">Sort by Newest</button>-->
+
+
+
+    <div class="d-flex flex-wrap p-2 p-md-5">
             <% sightings.forEach(function(sighting){ %>
                 <div class="card mb-3 mx-md-2 mx-auto" style="width: 22rem;">
                     <% if (sighting.picture && sighting.picture.data) { %>
@@ -71,6 +75,16 @@
   function addSighting(){
     window.location.href = "/sightings/add_sighting";
   }
+
+
+
+  // function sortSightings() {
+  //     const currentUrl = new URL(window.location.href);
+  //     const sortOrder = currentUrl.searchParams.get("sort") === "desc" ? "asc" : "desc";
+  //     currentUrl.searchParams.set("sort", sortOrder);
+  //     window.location.href = currentUrl.href;
+  // }
+
 </script>
 
 </html>

@@ -12,6 +12,10 @@ const sightingSchema = new mongoose.Schema({
         data: Buffer,
         contentType: String,
     },
+    timestamp: {
+        type: Date,
+        default: Date.now,
+    },
 });
 const Sighting = mongoose.model('Sighting', sightingSchema);
 module.exports = Sighting;

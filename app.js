@@ -139,6 +139,16 @@ app.get('/dashboard', ensureAuthenticated, (req, res) => {
   // Your dashboard route logic here
 });
 
+
+
+// app.get('/', async (req, res) => {
+//   const sortOrder = req.query.sort === 'desc' ? -1 : 1;
+//   const sightings = await Sighting.find().sort({ timestamp: sortOrder });
+//   res.render('index', { sightings: sightings });
+// });
+
+
+
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
     return next();
