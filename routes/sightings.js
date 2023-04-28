@@ -94,8 +94,45 @@ router.get('/add_sighting', function(req, res, next) {
     res.render('addSighting', { title: 'Add a new Sighting' });
 });
 
-router.get('/detail', (req, res) => {
-    res.render("detail", { title: 'Bird Detail Page' });
+// router.get('/detail', (req, res) => {
+//
+//
+//     var sightingId = req.query.id;
+//     // retrieve the sighting details from the database using the sightingId
+//     Sighting.findById(sightingId, function(err, sighting) {
+//         if (err) {
+//             return next(err);
+//         }
+//         if (!sighting) {
+//             var err = new Error('Sighting not found');
+//             err.status = 404;
+//             return next(err);
+//         }
+//     }),
+//     // var sightingId = req.query.id;
+//     res.render("detail", { title: 'Bird Detail Page' , sighting: sighting })
+// });
+
+router.get('/detail', async (req, res, next) => {
+    // Get the sightingId from the request query
+    var sightingId = req.query.id;
+
+    try {
+        // Retrieve the sighting details from the database using the sightingId
+        const sighting = await Sighting.findById(sightingId);
+
+        if (!sighting) {
+            var err = new Error('Sighting not found');
+            err.status = 404;
+            return next(err);
+        }
+
+        // Render the detail page with the sighting object
+        res.render("detail", { title: 'Bird Detail Page', sighting: sighting });
+    } catch (err) {
+        return next(err);
+    }
 });
+
 
 module.exports = router;

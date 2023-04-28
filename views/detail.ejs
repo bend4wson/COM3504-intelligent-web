@@ -6,14 +6,21 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                <img class="bird-img" src="../images/bird.jpg">
+<!--            <img class="bird-img" src="../images/bird.jpg">-->
+                <% if (sighting.picture && sighting.picture.data) { %>
+                    <img class="bird-img" src="data:<%= sighting.picture.contentType %>;base64,<%= sighting.picture.data.toString('base64') %>" />
+                <% } else { %>
+                    <span>No image</span>
+                <% } %>
+                <h3><%- sighting.type %></h3>
             </div>
             <div class="col">
                 <h3>Location</h3>
-                <p>Mock Location xxx</p>
+                <p>Location: <%- sighting.location %></p>
 
                 <h3>Description</h3>
-                <p>There are 12 template columns available per row, allowing you to create different combinations of elements that span any number of columns. Column classes indicate the number of template columns to span (e.g., col-4 spans four). widths are set in percentages so you always have the same relative sizing.</p>
+<!--                <p>There are 12 template columns available per row, allowing you to create different combinations of elements that span any number of columns. Column classes indicate the number of template columns to span (e.g., col-4 spans four). widths are set in percentages so you always have the same relative sizing.</p>-->
+                <p><%- sighting.description %></p>
             </div>
         </div>
 
@@ -52,10 +59,6 @@
                         </form>
                     </div>
                 </div>
-
-
-
-
 
             </div>
         </div>
