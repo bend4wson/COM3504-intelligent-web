@@ -7,7 +7,10 @@ var router = express.Router();
 
 router.get('/register', async (req, res) => {
     // console.log("1 *******");
-    res.render('register', { title: 'Registration Page' });
+    res.render('register', {
+        title: 'Register',
+        errorMessage: null
+    });
 });
 
 router.post('/register', async (req, res) => {

@@ -41,7 +41,10 @@ router.get('/dashboard', function(req, res, next) {
 
 
 router.get('/register', function(req, res, next) {
-  res.render('register', { title: 'Registration Page' });
+  res.render('register', {
+    title: 'Register',
+    errorMessage: null
+  });
 });
 
 router.get('/login', function(req, res, next) {
