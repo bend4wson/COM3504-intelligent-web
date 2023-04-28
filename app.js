@@ -39,7 +39,7 @@ app.use(passport.session());
 
 //For the bird sighting form
 const bodyParser = require('body-parser');
-app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 
@@ -81,13 +81,36 @@ app.use('/sightings', sightingsRouter);
 
 
 // Registration route
-app.post('/users/register', async (req, res) => {
+// app.post('/register', async (req, res) => {
+//   const { username, password } = req.body;
+//   const newUser = new Users({ username, password });
+//   await newUser.save();
+//   console.log(`Registered new user with username '${username}`);
+//   res.redirect('/login');
+// });
+
+// Registration route
+app.post('/register', async (req, res) => {
   const { username, password } = req.body;
-  const newUser = new Users({ username, password });
-  await newUser.save();
-  console.log(`Registered new user with username '${username}'`);
-  res.redirect('/users/login');
+
+  // Check if the user with the given username already exists
+  const existingUser = await Users.findOne({ username });
+
+  if (existingUser) {
+    // Render the registration page with an error message
+    res.render('register', {
+      title: 'Register',
+      errorMessage: 'Username already taken. Please choose another one.'
+    });
+  } else {
+    // Proceed with the registration process
+    const newUser = new Users({ username, password });
+    await newUser.save();
+    console.log(`Registered new user with username '${username}'`);
+    res.redirect('/login');
+  }
 });
+
 
 // // Add Sighting route
 // app.post('/add_sighting', async (req, res) => {
