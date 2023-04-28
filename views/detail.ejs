@@ -26,6 +26,9 @@
                 <h3>Description</h3>
 <!--                <p>There are 12 template columns available per row, allowing you to create different combinations of elements that span any number of columns. Column classes indicate the number of template columns to span (e.g., col-4 spans four). widths are set in percentages so you always have the same relative sizing.</p>-->
                 <p><%- sighting.description %></p>
+                <p>
+                <div id="bird-abstract"></div>
+                </p>
             </div>
         </div>
 
@@ -72,6 +75,48 @@
 
 <script>
     initMap('<%= sighting.location.lat %>', '<%= sighting.location.lng %>');
+
+    async function fetchBirdAbstract(birdName) {
+        const sparqlQuery = `
+    PREFIX dbo: <http://dbpedia.org/ontology/>
+    PREFIX dbr: <http://dbpedia.org/resource/>
+
+    SELECT ?abstract
+    WHERE {
+        BIND(IRI(CONCAT("http://dbpedia.org/resource/", REPLACE("${birdName}", " ", "_"))) as ?bird) .
+        ?bird dbo:abstract ?abstract .
+        FILTER(lang(?abstract) = "en") .
+    }
+    `;
+        const url = "https://dbpedia.org/sparql?query=" + encodeURIComponent(sparqlQuery) + "&format=json";
+
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
+            if (data.results.bindings.length > 0) {
+                return data.results.bindings[0].abstract.value;
+            } else {
+                return '';
+            }
+        } catch (error) {
+            console.error("Error fetching bird abstract:", error);
+            return '';
+        }
+    }
+
+    function displayBirdAbstract(abstract) {
+        const abstractContainer = document.getElementById('bird-abstract');
+        abstractContainer.textContent = abstract;
+    }
+
+    window.addEventListener('DOMContentLoaded', async () => {
+        const birdName = '<%= sighting.type %>';
+        const birdAbstract = await fetchBirdAbstract(birdName);
+        displayBirdAbstract(birdAbstract);
+    });
+
+
+
 </script>
 
 </body>
