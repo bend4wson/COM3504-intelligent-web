@@ -1,5 +1,9 @@
+var sighting = require("ejs/ejs");
 <%- include('header'); -%>
 <!--<link rel="manifest" href="/manifest.json">-->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
 <body onload="init()">
 
 <div class="p-5">
@@ -17,6 +21,7 @@
             <div class="col">
                 <h3>Location</h3>
                 <p>Location: <%- sighting.location %></p>
+                <div id="map" style="width: 100%; height: 300px;"></div>
 
                 <h3>Description</h3>
 <!--                <p>There are 12 template columns available per row, allowing you to create different combinations of elements that span any number of columns. Column classes indicate the number of template columns to span (e.g., col-4 spans four). widths are set in percentages so you always have the same relative sizing.</p>-->
@@ -64,5 +69,10 @@
         </div>
     </div>
 </div>
+
+<script>
+    initMap('<%= sighting.location.lat %>', '<%= sighting.location.lng %>');
+</script>
+
 </body>
 <%- include('footer'); -%>
