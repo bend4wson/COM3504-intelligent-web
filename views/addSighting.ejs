@@ -1,45 +1,45 @@
 <%- include('header'); -%>
+
+<div class="card col-11 col-md-6" style="margin: 100px auto;">
+    <div class="card-body">
         <h1>Add your sighting below:</h1>
 
         <form id="sightingForm" action="/sightings/add_sighting" method="post" enctype="multipart/form-data">
-            <div>
-                <label for="type">Type:</label>
-                <input type="text" name="type" id="type" required />
+            <div class="mb-3">
+                <label class="form-label" for="type">Type:</label>
+                <input class="form-control" type="text" name="type" id="type" required />
             </div>
-            <div>
-                <label for="description">Description:</label>
-                <input type="text" name="description" id="description" required />
+            <div class="mb-3">
+                <label class="form-label" for="description">Description:</label>
+                <input class="form-control" type="text" name="description" id="description" required />
             </div>
-            <div>
-                <label for="lat">Latitude:</label>
-                <input type="number" step="any" name="lat" id="lat" required />
+            <div class="mb-3">
+                <label class="form-label" for="lat">Latitude:</label>
+                <input class="form-control" type="number" step="any" name="lat" id="lat" required />
             </div>
-            <div>
-                <label for="lng">Longitude:</label>
-                <input type="number" step="any" name="lng" id="lng" required />
+            <div class="mb-3">
+                <label class="form-label" for="lng">Longitude:</label>
+                <input class="form-control" type="number" step="any" name="lng" id="lng" required />
             </div>
-            </div>
-            <div>
-                <label for="picture">Picture:</label>
+            <div class="mb-3">
+                <label class="form-label" for="picture">Picture:</label>
                 <input type="file" name="picture" id="picture" accept="image/*" />
             </div>
             <button type="submit">Add Sighting</button>
         </form>
-
-
-        <script>
-            function addSighting() {
-                const form = document.getElementById('sightingForm');
-                form.submit();
-            }
-        </script>
-    </body>
-
+    </div>
+</div>
+<script>
+    function addSighting() {
+        const form = document.getElementById('sightingForm');
+        form.submit();
+    }
+</script>
 <script>
     function formSubmission(){
 
     }
 </script>
 
+
 <%- include('footer'); -%>
-</html>

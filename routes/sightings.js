@@ -78,7 +78,6 @@ router.post('/add_sighting', upload.single('picture'), async (req, res) => {
         }
 
         const newSighting = new Sighting(newSightingData);
-        console.log("2");
         await newSighting.save();
         console.log("Sighting added successfully");
         res.redirect('/');

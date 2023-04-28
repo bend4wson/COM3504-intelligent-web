@@ -6,7 +6,7 @@ const Users = require("../databases/users");
 var router = express.Router();
 
 router.get('/register', async (req, res) => {
-    console.log("1 *******");
+    // console.log("1 *******");
     res.render('register', { title: 'Registration Page' });
 });
 
