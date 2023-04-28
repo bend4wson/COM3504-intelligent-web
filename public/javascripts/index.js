@@ -56,10 +56,12 @@ function sendChatText() {
  * used to connect to a room. It gets the user name and room number from the
  * interface
  */
-function connectToRoom() {
+function connectToRoom(sightingId) {
+
+    // console.log(sightingId + " ***************");
     // roomNo = document.getElementById('roomNo').value;
     // room = 1;
-    roomNo = "defaultRoom"
+    roomNo = sightingId.toString()
 
     name = document.getElementById('name').value;
     if (!name) name = 'Unknown-' + Math.random();
@@ -68,7 +70,7 @@ function connectToRoom() {
 
 /**
  * it appends the given html text to the history div
- * @param text: teh text to append
+ * @param text: the text to append
  */
 function writeOnHistory(text) {
     let history = document.getElementById('history');
