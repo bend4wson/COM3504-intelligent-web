@@ -34,6 +34,35 @@
         const form = document.getElementById('sightingForm');
         form.submit();
     }
+
+    function getLocation() {
+        console.log('Getting location...');
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    console.log('Position received:', position);
+                    document.getElementById('lat').value = position.coords.latitude;
+                    document.getElementById('lng').value = position.coords.longitude;
+                },
+                (error) => {
+                    console.warn(`ERROR(${error.code}): ${error.message}`);
+                    console.log('Error details:', error);
+                },
+                {
+                    enableHighAccuracy: true,
+                    timeout: 5000,
+                    maximumAge: 0,
+                }
+            );
+        } else {
+            console.log('Geolocation is not supported by this browser.');
+        }
+    }
+
+
+
+    // Call getLocation when the page loads
+    window.addEventListener('DOMContentLoaded', getLocation);
 </script>
 <script>
     function formSubmission(){
