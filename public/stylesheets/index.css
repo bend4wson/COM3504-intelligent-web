@@ -17,6 +17,28 @@ button, input[type="button"] {
     transition-duration: 0.4s;
 }
 
+#connection-status {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    display: none;
+}
+
+#connection-status.offline {
+    background-color: red;
+    color: white;
+    display: block;
+}
+
+#connection-status.online {
+    background-color: green;
+    color: white;
+    display: block;
+}
+
+
 button:hover, input[type="button"]:hover {
     background-color: #0056b3;
     color: white;
