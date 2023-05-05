@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const sightingSchema = new mongoose.Schema({
     type: String,
     description: String,
@@ -13,11 +12,10 @@ const sightingSchema = new mongoose.Schema({
         data: Buffer,
         contentType: String,
     },
-}, {
-      timestamps: true
-  }
-);
-
+    timestamp: {
+        type: Date,
+        default: Date.now,
+    },
+});
 const Sighting = mongoose.model('Sighting', sightingSchema);
-
 module.exports = Sighting;

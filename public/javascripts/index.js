@@ -1,186 +1,3 @@
-// let name = null;
-// let roomNo = null;
-// let socket = io();
-//
-//
-// /**
-//  * called by <body onload>
-//  * it initialises the interface and the expected socket messages
-//  * plus the associated actions
-//  */
-// function init() {
-//     // it sets up the interface so that userId and room are selected
-//     // document.getElementById('initial_form').style.display = 'block';
-//     // document.getElementById('chat_interface').style.display = 'none';
-//
-//     // called when someone joins the room. If it is someone else it notifies the joining of the room
-//     socket.on('joined', function (room, userId) {
-//         if (userId === name) {
-//             // it enters the chat
-//             hideLoginInterface(room, userId);
-//         } else {
-//             // notifies that someone has joined the room
-//             writeOnHistory('<b>'+userId+'</b>' + ' joined room ' + room);
-//         }
-//     });
-//     // called when a message is received
-//     socket.on('chat', function (room, userId, chatText) {
-//         let who = userId
-//         if (userId === name) who = 'Me';
-//         writeOnHistory('<b>' + who + ':</b> ' + chatText);
-//     });
-//
-// }
-//
-// /**
-//  * called to generate a random room number
-//  * This is a simplification. A real world implementation would ask the server to generate a unique room number
-//  * so to make sure that the room number is not accidentally repeated across uses
-//  */
-// function generateRoom() {
-//     roomNo = Math.round(Math.random() * 10000);
-//     document.getElementById('roomNo').value = 'R' + roomNo;
-// }
-//
-// /**
-//  * called when the Send button is pressed. It gets the text to send from the interface
-//  * and sends the message via  socket
-//  */
-// function sendChatText() {
-//     let chatText = document.getElementById('chat_input').value;
-//     socket.emit('chat', roomNo, name, chatText);
-// }
-//
-// /**
-//  * used to connect to a room. It gets the user name and room number from the
-//  * interface
-//  */
-// function connectToRoom() {
-//     roomNo = 1
-//     name = 'Unknown-' + Math.random();
-//     socket.emit('create or join', roomNo, name);
-// }
-//
-// /**
-//  * it appends the given html text to the history div
-//  * @param text: teh text to append
-//  */
-// function writeOnHistory(text) {
-//     let history = document.getElementById('history');
-//     let paragraph = document.createElement('p');
-//     paragraph.innerHTML = text;
-//     history.appendChild(paragraph);
-//     document.getElementById('chat_input').value = '';
-// }
-//
-// /**
-//  * it hides the initial form and shows the chat
-//  * @param room the selected room
-//  * @param userId the user name
-//  */
-// function hideLoginInterface(room, userId) {
-//     document.getElementById('initial_form').style.display = 'none';
-//     document.getElementById('chat_interface').style.display = 'block';
-//     document.getElementById('who_you_are').innerHTML= userId;
-//     document.getElementById('in_room').innerHTML= ' '+room;
-// }
-//
-
-// let name = null;
-// let roomNo = null;
-// let socket = io();
-//
-//
-// /**
-//  * called by <body onload>
-//  * it initialises the interface and the expected socket messages
-//  * plus the associated actions
-//  */
-// function init() {
-//     // it sets up the interface so that userId and room are selected
-//     document.getElementById('initial_form').style.display = 'block';
-//     document.getElementById('chat_interface').style.display = 'none';
-//
-//     // called when someone joins the room. If it is someone else it notifies the joining of the room
-//     socket.on('joined', function (room, userId) {
-//         if (userId === name) {
-//             // it enters the chat
-//             hideLoginInterface(room, userId);
-//         } else {
-//             // notifies that someone has joined the room
-//             writeOnHistory('<b>'+userId+'</b>' + ' joined room ' + room);
-//         }
-//     });
-//     // called when a message is received
-//     socket.on('chat', function (room, userId, chatText) {
-//         let who = userId
-//         if (userId === name) who = 'Me';
-//         writeOnHistory('<b>' + who + ':</b> ' + chatText);
-//     });
-//
-// }
-//
-// /**
-//  * called to generate a random room number
-//  * This is a simplification. A real world implementation would ask the server to generate a unique room number
-//  * so to make sure that the room number is not accidentally repeated across uses
-//  */
-// function generateRoom() {
-//     roomNo = Math.round(Math.random() * 10000);
-//     document.getElementById('roomNo').value = 'R' + roomNo;
-// }
-//
-// /**
-//  * called when the Send button is pressed. It gets the text to send from the interface
-//  * and sends the message via  socket
-//  */
-// function sendChatText() {
-//     let chatText = document.getElementById('chat_input').value;
-//     socket.emit('chat', roomNo, name, chatText);
-// }
-//
-// /**
-//  * used to connect to a room. It gets the user name and room number from the
-//  * interface
-//  */
-// function connectToRoom() {
-//     roomNo = 1
-//     name = 'Unknown-' + Math.random();
-//     socket.emit('create or join', roomNo, name);
-// }
-//
-// /**
-//  * it appends the given html text to the history div
-//  * @param text: teh text to append
-//  */
-// function writeOnHistory(text) {
-//     let history = document.getElementById('history');
-//     let paragraph = document.createElement('p');
-//     paragraph.innerHTML = text;
-//     history.appendChild(paragraph);
-//     document.getElementById('chat_input').value = '';
-// }
-//
-// /**
-//  * it hides the initial form and shows the chat
-//  * @param room the selected room
-//  * @param userId the user name
-//  */
-// function hideLoginInterface(room, userId) {
-//     document.getElementById('initial_form').style.display = 'none';
-//     document.getElementById('chat_interface').style.display = 'block';
-//     document.getElementById('who_you_are').innerHTML= userId;
-//     document.getElementById('in_room').innerHTML= ' '+room;
-// }
-//
-//
-//     function showChatInterface() {
-//     var chatButton = document.getElementById("chat_button");
-//     var chatInterface = document.getElementById("chat_interface");
-//     chatButton.style.display = "none";
-//     chatInterface.style.display = "block";
-// }
-
 let name = null;
 let roomNo = null;
 let socket = io();
@@ -203,7 +20,8 @@ function init() {
             hideLoginInterface(room, userId);
         } else {
             // notifies that someone has joined the room
-            writeOnHistory('<b>'+userId+'</b>' + ' joined room ' + room);
+            // writeOnHistory('<b>'+userId+'</b>' + ' joined room ' + room);
+
         }
     });
     // called when a message is received
@@ -238,15 +56,21 @@ function sendChatText() {
  * used to connect to a room. It gets the user name and room number from the
  * interface
  */
-function connectToRoom() {
-    roomNo = 1
-    name = 'Unknown-' + Math.random();
+function connectToRoom(sightingId) {
+
+    // console.log(sightingId + " ***************");
+    // roomNo = document.getElementById('roomNo').value;
+    // room = 1;
+    roomNo = sightingId.toString()
+
+    name = document.getElementById('name').value;
+    if (!name) name = 'Unknown-' + Math.random();
     socket.emit('create or join', roomNo, name);
 }
 
 /**
  * it appends the given html text to the history div
- * @param text: teh text to append
+ * @param text: the text to append
  */
 function writeOnHistory(text) {
     let history = document.getElementById('history');
@@ -268,13 +92,53 @@ function hideLoginInterface(room, userId) {
     document.getElementById('in_room').innerHTML= ' '+room;
 }
 
-function showChatInterface() {
-    var chatButton = document.getElementById("chat_button");
-    var chatInterface = document.getElementById("chat_interface");
-    chatButton.style.display = "none";
-    chatInterface.style.display = "block";
+
+
+// async function fetchBirdTypes() {
+//     const sparqlQuery = `
+//     PREFIX dbo: <http://dbpedia.org/ontology/>
+//     PREFIX dbr: <http://dbpedia.org/resource/>
+//     SELECT DISTINCT ?about
+//     WHERE {
+//         dbr:Bird dbo:wikiPageWikiLink ?resource .
+//         ?resource dbo:abstract ?about .
+//         FILTER(lang(?about) = "en") .
+//     }
+//     LIMIT 100
+//     `;
+//     const url = "https://dbpedia.org/sparql?query=" + encodeURIComponent(sparqlQuery) + "&format=json";
+//
+//     try {
+//         const response = await fetch(url);
+//         const data = await response.json();
+//         return data.results.bindings;
+//     } catch (error) {
+//         console.error("Error fetching bird types:", error);
+//         return [];
+//     }
+// }
+//
+// function populateBirdTypesDropdown(birdTypes) {
+//     const dropdown = document.getElementById("type");
+//     birdTypes.forEach((birdType) => {
+//         const option = document.createElement("option");
+//         option.value = option.textContent = birdType.about.value;
+//         dropdown.appendChild(option);
+//     });
+// }
+
+window.onload = function() {
+    const sortEle = document.getElementById("sort");
+    const sortOptions = sortEle.getElementsByTagName('option');
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const sort = urlSearchParams.get('sort');
+    for (let i = 0; i < sortOptions.length; i++) {
+        if (sortOptions[i].value === sort) {
+            sortOptions[i].selected = true;
+        }
+    }
+
+    sortEle.addEventListener("change", function(event) {
+        document.getElementById("form").submit();
+    })
 }
-
-
-
-

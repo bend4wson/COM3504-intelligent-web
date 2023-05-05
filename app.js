@@ -8,17 +8,19 @@ const logger = require('morgan');
 const session = require('express-session');
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-const User = require('./databases/users');
-
+const Users = require('./databases/users');
+const db = require('./databases/database');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const sightingsRouter = require('./routes/sightings');
 const Sighting = require("./databases/sightings");
 
-const mongoose = require("./databases/database");
-
 const app = express();
+
+app.use('/', indexRouter);
+app.use('/users', usersRouter);
+app.use('/sightings', sightingsRouter);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -37,14 +39,14 @@ app.use(passport.session());
 
 //For the bird sighting form
 const bodyParser = require('body-parser');
-app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 
 // Configuring the Passport.js strategies, serializers and deserializers
 passport.use(new LocalStrategy(async (username, password, done) => {
   try {
-    const user = await User.findOne({ username });
+    const user = await Users.findOne({ username });
     if (!user) {
       return done(null, false, { message: 'Incorrect username.' });
     }
@@ -66,7 +68,7 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser(async (id, done) => {
   try {
-    const user = await User.findById(id);
+    const user = await Users.findById(id);
     done(null, user);
   } catch (err) {
     done(err, null);
@@ -79,17 +81,36 @@ app.use('/sightings', sightingsRouter);
 
 
 // Registration route
-app.post('/users/register', async (req, res) => {
-  const { username, password } = req.body;
-  const newUser = new User({ username, password });
-  await newUser.save();
-// <<<<<<< HEAD
-  console.log(`Registered new user with username '${username}'`);
-  res.redirect('/users/login');
-// =======
+// app.post('/register', async (req, res) => {
+//   const { username, password } = req.body;
+//   const newUser = new Users({ username, password });
+//   await newUser.save();
+//   console.log(`Registered new user with username '${username}`);
 //   res.redirect('/login');
-// >>>>>>> origin/Zhonghao
+// });
+
+// Registration route
+app.post('/register', async (req, res) => {
+  const { username, password } = req.body;
+
+  // Check if the user with the given username already exists
+  const existingUser = await Users.findOne({ username });
+
+  if (existingUser) {
+    // Render the registration page with an error message
+    res.render('register', {
+      title: 'Register',
+      errorMessage: 'Username already taken. Please choose another one.'
+    });
+  } else {
+    // Proceed with the registration process
+    const newUser = new Users({ username, password });
+    await newUser.save();
+    console.log(`Registered new user with username '${username}'`);
+    res.redirect('/login');
+  }
 });
+
 
 // // Add Sighting route
 // app.post('/add_sighting', async (req, res) => {
@@ -118,13 +139,15 @@ app.get('/dashboard', ensureAuthenticated, (req, res) => {
   // Your dashboard route logic here
 });
 
-// app.get('/', (req, res) => {
-//   res.render("list", { title: 'Bird List Page' });
+
+
+// app.get('/', async (req, res) => {
+//   const sortOrder = req.query.sort === 'desc' ? -1 : 1;
+//   const sightings = await Sighting.find().sort({ timestamp: sortOrder });
+//   res.render('index', { sightings: sightings });
 // });
 
-app.get('/detail', (req, res) => {
-  res.render("detail", { title: 'Bird Detail Page' });
-});
+
 
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {

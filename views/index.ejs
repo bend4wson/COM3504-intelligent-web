@@ -1,19 +1,59 @@
 <%- include('header'); -%>
 
-  <div class="d-flex flex-wrap p-2 p-md-5">
-    <% birds.forEach(function(bird){ %>
-      <div class="card mb-3 mx-md-2 mx-auto" style="width: 22rem;">
-        <img src="<%- bird.picture  %>" class="card-img-top" alt="bird">
-        <div class="card-body">
-          <h5 class="card-title"><%- bird.type %></h5>
-          <h6 class="card-subtitle mb-2 text-body-secondary"><%- bird.location.lat  %>, <%- bird.location.lng  %></h6>
-          <h6 class="card-subtitle mb-2 text-body-secondary"><%- new Date(bird.createdAt).toLocaleString()  %></h6>
-          <p class="card-text"><%- bird.description %></p>
-          <a href="detail" class="btn btn-primary">Details</a>
-          <a href="detail" class="btn btn-primary">Comments</a>
+<!--    <thead>-->
+<!--    <tr>-->
+<!--      <th scope="col">DateTime</th>-->
+<!--      <th scope="col">Location</th>-->
+<!--      <th scope="col">Description</th>-->
+<!--      <th scope="col">Identification</th>-->
+<!--      <th scope="col">photo</th>-->
+<!--      <th scope="col">Nickname</th>-->
+<!--      <th scope="col">Actions</th>-->
+<!--    </tr>-->
+<!--    </thead>-->
+<!--    <tbody>-->
+<!--    <tr>-->
+<!--      <td>2023-03-01</td>-->
+<!--      <td>Mock Location</td>-->
+<!--      <td>Mock Description</td>-->
+<!--      <td>Unknown</td>-->
+<!--      <td><img class="bird-thumbnail" src="images/bird.jpg"></td>-->
+<!--      <td>Bob</td>-->
+<!--      <td>-->
+<!--        <a href="detail" class="btn btn-primary btn-sm">Details</a>-->
+<!--        <a type="button" class="btn btn-primary btn-sm">Comments</a>-->
+<!--      </td>-->
+<!--    </tr>-->
+<!--    </tbody>-->
+
+<!--    <button id="sortButton" onclick="sortSightings()">Sort by Newest</button>-->
+
+
+    <form id="form" action="/" class="d-flex align-items-center p-2 pt-md-5 pe-md-5 ps-md-5">
+        <span>Sort By:</span>
+        <select id="sort" name="sort" class="form-select" style="width: 200px;margin-left: 10px">
+            <option selected>---- Select Sort By ----</option>
+            <option value="1">Date</option>
+            <option value="2">Distance</option>
+        </select>
+    </form>
+    <div class="d-flex flex-wrap p-2 p-md-5">
+            <% sightings.forEach(function(sighting){ %>
+                <div class="card mb-3 mx-md-2 mx-auto" style="width: 22rem;">
+                    <% if (sighting.picture && sighting.picture.data) { %>
+                        <img class="bird-thumbnail" src="data:<%= sighting.picture.contentType %>;base64,<%= sighting.picture.data.toString('base64') %>" />
+                    <% } else { %>
+                        <span>No image</span>
+                    <% } %>
+                    <div class="card-body">
+                        <h5 class="card-title"><%- sighting.type %></h5>
+                        <h6 class="card-subtitle mb-2 text-body-secondary"><%- sighting.location.lat  %>, <%- sighting.location.lng  %></h6>
+                        <p class="card-text"><%- sighting.description %></p>
+                        <a href="/sightings/detail?id=<%= sighting._id %>" class="btn btn-primary">Details</a>
+                        <!--                        <a href="detail" class="btn btn-primary">Comments</a>-->
+                    </div>
+                </div>
+            <% }) %>
         </div>
-      </div>
-    <% }); %>
-  </div>
 
 <%- include('footer'); -%>

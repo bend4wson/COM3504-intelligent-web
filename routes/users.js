@@ -5,14 +5,12 @@ var express = require('express');
 const Users = require("../databases/users");
 var router = express.Router();
 
-/* GET users listing. */
-// router.get('/', function(req, res, next) {
-//     res.render('index', { title: 'Bird Watching Page' });
-// });
-
 router.get('/register', async (req, res) => {
-    console.log("1 *******");
-    res.render('register', { title: 'Registration Page' });
+    // console.log("1 *******");
+    res.render('register', {
+        title: 'Register',
+        errorMessage: null
+    });
 });
 
 router.post('/register', async (req, res) => {
