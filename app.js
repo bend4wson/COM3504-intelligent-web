@@ -18,10 +18,6 @@ const Sighting = require("./databases/sightings");
 
 const app = express();
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/sightings', sightingsRouter);
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -128,11 +124,11 @@ app.post('/register', async (req, res) => {
 // });
 
 // Login route
-app.post('/users/login', passport.authenticate('local', {
-  successRedirect: '/dashboard',
-  failureRedirect: '/users/login',
-  failureFlash: true,
-}));
+// app.post('/users/login', passport.authenticate('local', {
+//   successRedirect: '/dashboard',
+//   failureRedirect: '/users/login',
+//   failureFlash: true,
+// }));
 
 // Authentication-protected route
 app.get('/dashboard', ensureAuthenticated, (req, res) => {
