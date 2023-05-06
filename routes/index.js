@@ -25,7 +25,20 @@ var router = express.Router();
 
 router.get('/', async (req, res) => {
   try {
-    const sightings = await Sighting.find();
+    const sort = req.query.sort;
+    const sortArgs = {};
+    if (sort === "1") {
+      sortArgs.timestamp = -1;
+    }
+
+    let sightings = await Sighting.find().sort(sortArgs);
+    if (sort === "2") {
+      sightings = sightings.sort((a, b) =>
+        Math.sqrt(Math.pow(b.lat - b.location.lat, 2) + Math.pow(b.lng - b.location.lng, 2)) -
+        Math.sqrt(Math.pow(a.lat - a.location.lat, 2) + Math.pow(a.lng - a.location.lng, 2))
+      )
+    }
+
     res.render('index', { title: 'Bird Watching Page', sightings });
   } catch (err) {
     console.error(err);
@@ -48,7 +61,7 @@ router.get('/register', function(req, res, next) {
 });
 
 router.get('/login', function(req, res, next) {
-  res.render('login', { title: 'Login Page' });
+  res.render('login', { title: 'Login Page', message: '' });
 });
 
 module.exports = router;

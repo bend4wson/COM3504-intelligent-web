@@ -1,15 +1,5 @@
 <%- include('header'); -%>
 
-<h1>Bird Watching Page</h1>
-
-
-<body>
-<div class="button-container">
-  <input type="button" onclick="registerPage()" value="Log In/Sign Up" />
-</div>
-
-
-<div class="p-5">
 <!--    <thead>-->
 <!--    <tr>-->
 <!--      <th scope="col">DateTime</th>-->
@@ -39,7 +29,14 @@
 <!--    <button id="sortButton" onclick="sortSightings()">Sort by Newest</button>-->
 
 
-
+    <form id="form" action="/" class="d-flex align-items-center p-2 pt-md-5 pe-md-5 ps-md-5">
+        <span>Sort By:</span>
+        <select id="sort" name="sort" class="form-select" style="width: 200px;margin-left: 10px">
+            <option selected>---- Select Sort By ----</option>
+            <option value="1">Date</option>
+            <option value="2">Distance</option>
+        </select>
+    </form>
     <div class="d-flex flex-wrap p-2 p-md-5">
             <% sightings.forEach(function(sighting){ %>
                 <div class="card mb-3 mx-md-2 mx-auto" style="width: 22rem;">
@@ -53,40 +50,11 @@
                         <h6 class="card-subtitle mb-2 text-body-secondary"><%- sighting.location.lat  %>, <%- sighting.location.lng  %></h6>
                         <p class="card-text"><%- sighting.description %></p>
                         <a href="/sightings/detail?id=<%= sighting._id %>" class="btn btn-primary">Details</a>
+                        <a href="/sightings/update_sighting?id=<%= sighting._id %>" class="btn btn-primary">Update</a>
                         <!--                        <a href="detail" class="btn btn-primary">Comments</a>-->
                     </div>
                 </div>
             <% }) %>
         </div>
-</div>
-
-<div class="button-container">
-  <input type="button" onclick="addSighting()" value="Add a sighting" />
-</div>
-</body>
-
-
-
-<script>
-  function registerPage(){
-    window.location.href = "/users/register";
-  }
-
-  function addSighting(){
-    window.location.href = "/sightings/add_sighting";
-  }
-
-
-
-  // function sortSightings() {
-  //     const currentUrl = new URL(window.location.href);
-  //     const sortOrder = currentUrl.searchParams.get("sort") === "desc" ? "asc" : "desc";
-  //     currentUrl.searchParams.set("sort", sortOrder);
-  //     window.location.href = currentUrl.href;
-  // }
-
-</script>
-
-</html>
 
 <%- include('footer'); -%>

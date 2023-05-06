@@ -21,7 +21,7 @@ function init() {
         } else {
             // notifies that someone has joined the room
             // writeOnHistory('<b>'+userId+'</b>' + ' joined room ' + room);
-            
+
         }
     });
     // called when a message is received
@@ -127,4 +127,18 @@ function hideLoginInterface(room, userId) {
 //     });
 // }
 
+window.onload = function() {
+    const sortEle = document.getElementById("sort");
+    const sortOptions = sortEle.getElementsByTagName('option');
+    const urlSearchParams = new URLSearchParams(window.location.search);
+    const sort = urlSearchParams.get('sort');
+    for (let i = 0; i < sortOptions.length; i++) {
+        if (sortOptions[i].value === sort) {
+            sortOptions[i].selected = true;
+        }
+    }
 
+    sortEle.addEventListener("change", function(event) {
+        document.getElementById("form").submit();
+    })
+}

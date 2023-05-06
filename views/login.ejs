@@ -2,19 +2,29 @@
 <div class="card" style="width: 22rem;margin: 100px auto;">
     <div class="card-body">
         <h1 class="text-center mb-3">Login</h1>
-        <form>
+        <form action="/users/login" method="post" class="needs-validation" novalidate>
             <div class="mb-3">
                 <label for="username" class="form-label">Username</label>
-                <input type="username" class="form-control" id="username" required>
+                <input type="username" name="username" class="form-control" id="username" required>
+                <div class="invalid-feedback">
+                    Please enter username.
+                </div>
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" required>
+                <input type="password" name="password" class="form-control" id="password" required>
+                <div class="invalid-feedback">
+                    Please enter password.
+                </div>
             </div>
             <div class="d-grid">
                 <button type="submit" class="btn btn-primary">Login</button>
             </div>
+            <% if (message) { %>
+                <div><%- message %></div>
+            <% } %>
         </form>
     </div>
 </div>
+<script src="/javascripts/login.js"></script>
 <%- include('footer'); -%>

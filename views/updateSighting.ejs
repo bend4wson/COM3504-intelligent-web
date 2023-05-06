@@ -2,13 +2,14 @@
 
 <div class="card col-11 col-md-6" style="margin: 100px auto;">
     <div class="card-body">
-        <h1>Add your sighting below:</h1>
+        <h1>Update your sighting below:</h1>
 
-        <form id="sightingForm" action="/sightings/add_sighting" method="post" enctype="multipart/form-data">
+        <form id="sightingForm">
 <!--            <div class="mb-3">-->
 <!--                <label class="form-label" for="type">Type:</label>-->
 <!--                <input class="form-control" type="text" name="type" id="type" required />-->
 <!--            </div>-->
+            <input class="form-control" type="hidden" name="id" id="id" required value="<%- sighting._id %>" />
             <div class="mb-3">
                 <label class="form-label" for="type">Type:</label>
                 <select class="form-control" name="type" id="type" required></select>
@@ -16,15 +17,15 @@
 
             <div class="mb-3">
                 <label class="form-label" for="description">Description:</label>
-                <input class="form-control" type="text" name="description" id="description" required />
+                <input class="form-control" type="text" name="description" id="description" required value="<%- sighting.description %>" />
             </div>
             <div class="mb-3">
                 <label class="form-label" for="lat">Latitude:</label>
-                <input class="form-control" type="number" step="any" name="lat" id="lat" required />
+                <input class="form-control" type="number" step="any" name="lat" id="lat" required value="<%- sighting.location.lat %>" />
             </div>
             <div class="mb-3">
                 <label class="form-label" for="lng">Longitude:</label>
-                <input class="form-control" type="number" step="any" name="lng" id="lng" required />
+                <input class="form-control" type="number" step="any" name="lng" id="lng" required value="<%- sighting.location.lng %>" />
             </div>
             <input class="form-control" type="hidden" name="userLat" id="userLat" required />
             <input class="form-control" type="hidden" name="userLng" id="userLng" required />
@@ -32,16 +33,14 @@
                 <label class="form-label" for="picture">Picture:</label>
                 <input type="file" name="picture" id="picture" accept="image/*" />
             </div>
-            <button type="submit">Add Sighting</button>
+            <button type="submit">Update Sighting</button>
+            <div id="alert" class="alert alert-success" role="alert" style="display: none">
+               Update successful!
+            </div>
         </form>
     </div>
 </div>
 <script>
-    function addSighting() {
-        const form = document.getElementById('sightingForm');
-        form.submit();
-    }
-
     function getLocation() {
         console.log('Getting location...');
         if (navigator.geolocation) {
@@ -105,12 +104,16 @@
         const unknownOption = document.createElement("option");
         unknownOption.value = "unknown";
         unknownOption.textContent = "Unknown";
-        unknownOption.selected = true;
         dropdown.appendChild(unknownOption);
+
+        const type = '<%- sighting.type %>';
 
         birdTypes.forEach((birdType) => {
             const option = document.createElement("option");
             option.value = option.textContent = birdType.birdLabel.value;
+            if (option.value === type) {
+              option.selected = true;
+            }
             dropdown.appendChild(option);
         });
     }
@@ -129,11 +132,8 @@
         getLocation();
     });
 </script>
-<script>
-    function formSubmission(){
 
-    }
-</script>
+<script src="/javascripts/updateSighting.js"></script>
 
 
 <%- include('footer'); -%>

@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const Sighting = require('../databases/sightings');
 const Users = require("../databases/users");
-
 const multer = require('multer');
 const upload = multer({ storage: multer.memoryStorage() });
 
@@ -68,6 +67,8 @@ router.post('/add_sighting', upload.single('picture'), async (req, res) => {
                 lat: req.body.lat,
                 lng: req.body.lng,
             },
+            lat: req.body.userLat,
+            lng: req.body.userLng
         };
 
         if (req.file) {
@@ -92,6 +93,41 @@ router.post('/add_sighting', upload.single('picture'), async (req, res) => {
 
 router.get('/add_sighting', function(req, res, next) {
     res.render('addSighting', { title: 'Add a new Sighting' });
+});
+
+router.get('/update_sighting', async function(req, res, next) {
+    const sighting = await Sighting.findById(req.query.id);
+    res.render('updateSighting', { title: 'Update Sighting', sighting });
+});
+
+router.post('/update_sighting', upload.single('picture'), async (req, res) => {
+    try {
+        const id = req.body.id;
+        const sighting = {};
+
+        sighting.type = req.body.type;
+        sighting.description = req.body.description;
+        sighting.location = {
+            lat: req.body.location.lat,
+            lng: req.body.location.lng
+        };
+        sighting.lat = req.body.userLat;
+        sighting.lng = req.body.userLng;
+
+        if (req.file) {
+            sighting.picture = {
+                data: req.file.buffer,
+                contentType: req.file.mimetype,
+            };
+        }
+
+        await Sighting.findByIdAndUpdate(id, sighting);
+        console.log("Sighting updated successfully");
+        res.status(200).send();
+    } catch (error) {
+        console.error("Error updating sighting", error);
+        res.status(400).json({ message: 'Error updating sighting', error });
+    }
 });
 
 // router.get('/detail', (req, res) => {
