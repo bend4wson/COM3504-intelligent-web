@@ -8,10 +8,6 @@
         <h1>Add your sighting below:</h1>
 
         <form id="sightingForm" action="/sightings/add_sighting" method="post" enctype="multipart/form-data">
-<!--            <div class="mb-3">-->
-<!--                <label class="form-label" for="type">Type:</label>-->
-<!--                <input class="form-control" type="text" name="type" id="type" required />-->
-<!--            </div>-->
             <div class="mb-3">
                 <label class="form-label" for="type">Type:</label>
                 <select class="form-control" name="type" id="type" required></select>
@@ -31,14 +27,13 @@
             </div>
 
             <div id="map" style="height: 400px; width: 100%;">
-                <!-- Loading widget -->
                 <div id="loadingWidget">
                     <p>Loading map...</p>
-                    <!-- You can replace the paragraph above with a spinner or loading icon if desired -->
+                    <!-- *** Replace the paragraph above with a spinner when there is chance, can use Font Awesome or Bootstrap -->
                 </div>
             </div>
 <!--                <label class="form-label" for="map">Choose Sighting Location:</label>-->
-            </div>
+<!--            </div>-->
             <input class="form-control" type="hidden" name="userLat" id="userLat" required />
             <input class="form-control" type="hidden" name="userLng" id="userLng" required />
             <div class="mb-3">
