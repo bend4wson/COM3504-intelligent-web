@@ -172,6 +172,7 @@ function ensureAuthenticated(req, res, next) {
 //   res.render('error');
 // });
 
+
 app.use(function(req, res, next) {
   console.log('404 error handler');
   next(createError(404));

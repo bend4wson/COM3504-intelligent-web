@@ -1,6 +1,9 @@
 <%- include('header'); -%>
 <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script src="https://unpkg.com/idb-keyval@6/dist/idb-keyval-iife-compat.min.js"></script>
+<script src="/javascripts/onlineOffline.js"></script>
+
 
 
 <div class="card col-11 col-md-6" style="margin: 100px auto;">
@@ -45,9 +48,30 @@
     </div>
 </div>
 <script>
-    function addSighting() {
+    // function addSighting() {
+    //     // const form = document.getElementById('sightingForm');
+    //     // form.submit();
+    //     if (navigator.onLine) {
+    //         // User is online, submit the form as usual
+    //         const form = document.getElementById('sightingForm');
+    //         form.submit();
+    //     } else {
+    //         // User is offline, save the form data in IndexedDB
+    //         const formData = new FormData(document.getElementById('sightingForm'));
+    //         saveFormDataInIndexedDB(formData);
+    //     }
+    // }
+    async function addSighting() {
         const form = document.getElementById('sightingForm');
-        form.submit();
+        const formData = new FormData(form);
+
+        if (navigator.onLine) {
+            // User is online, submit the form as usual
+            form.submit();
+        } else {
+            // User is offline, save the form data in IndexedDB
+            await saveFormDataInIndexedDB(formData);
+        }
     }
 
     function getLocation() {
