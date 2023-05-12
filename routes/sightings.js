@@ -5,6 +5,10 @@ const Users = require("../databases/users");
 const multer = require('multer');
 const upload = multer({ storage: multer.memoryStorage() });
 
+const { fetchChatHistory } = require('../controllers/chatController');
+router.get('/chat-history/:sightingId', fetchChatHistory);
+
+
 // router.get('/', async (req, res) => {
 //     // res.render('index', { title: 'Bird Watching Page' });
 //     try {
