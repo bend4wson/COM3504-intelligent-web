@@ -14,16 +14,40 @@ function init() {
     document.getElementById('chat_interface').style.display = 'none';
 
     // called when someone joins the room. If it is someone else it notifies the joining of the room
+    // socket.on('joined', function (room, userId) {
+    //     if (userId === name) {
+    //         // it enters the chat
+    //         hideLoginInterface(room, userId);
+    //     } else {
+    //         // notifies that someone has joined the room
+    //         // writeOnHistory('<b>'+userId+'</b>' + ' joined room ' + room);
+    //
+    //     }
+    // });
+
     socket.on('joined', function (room, userId) {
+        console.log('Joined event triggered'); // Add this line
+
         if (userId === name) {
             // it enters the chat
+            console.log('Jinside if statement'); // Add this line
+
             hideLoginInterface(room, userId);
+
+            fetchChatHistory(room)
+                .then(() => {
+                    console.log('Chat history fetched and displayed');
+                    // Add any code here that should run after the chat history has been fetched and displayed.
+                })
+                .catch((error) => {
+                    console.error('Error while fetching chat history:', error);
+                });
         } else {
             // notifies that someone has joined the room
             // writeOnHistory('<b>'+userId+'</b>' + ' joined room ' + room);
-
         }
     });
+
     // called when a message is received
     socket.on('chat', function (room, userId, chatText) {
         let who = userId
@@ -38,10 +62,28 @@ function init() {
  * This is a simplification. A real world implementation would ask the server to generate a unique room number
  * so to make sure that the room number is not accidentally repeated across uses
  */
-function generateRoom() {
-    roomNo = Math.round(Math.random() * 10000);
-    document.getElementById('roomNo').value = 'R' + roomNo;
+// function generateRoom() {
+//     roomNo = Math.round(Math.random() * 10000);
+//     document.getElementById('roomNo').value = 'R' + roomNo;
+// }
+
+async function fetchChatHistory(sightingId) {
+    console.log('fetchChatHistory called'); // Add this line
+
+    try {
+        const response = await fetch(`/sightings/chat-history/${sightingId}`);
+        const chatHistory = await response.json();
+        console.log('Fetched chat history:', chatHistory); // Add this line
+
+
+        chatHistory.forEach((chat) => {
+            writeOnHistory(`<b>${chat.userId}:</b> ${chat.message}`);
+        });
+    } catch (error) {
+        console.error("Error fetching chat history:", error);
+    }
 }
+
 
 /**
  * called when the Send button is pressed. It gets the text to send from the interface
