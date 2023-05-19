@@ -5,10 +5,10 @@
 
 <body onload="init()">
 
-<div class="p-5">
+<div class="p-2 p-md-5">
     <div class="container">
         <div class="row">
-            <div class="col">
+            <div class="col-12 col-md-6">
 <!--            <img class="bird-img" src="../images/bird.jpg">-->
                 <% if (sighting.picture && sighting.picture.data) { %>
                     <img class="bird-img" src="data:<%= sighting.picture.contentType %>;base64,<%= sighting.picture.data.toString('base64') %>" />
@@ -18,7 +18,7 @@
                 <h3><%- sighting.type %></h3>
 <!--                <a href="/sightings/update_sighting?id=<%= sighting._id %>" class="btn btn-primary">Update</a>-->
             </div>
-            <div class="col">
+            <div class="col-12 col-md-6">
                 <h3>Location: </h3>
                 <p>Lat: <%- sighting.location.lat %> </p>
                 <p>Lng: <%- sighting.location.lng %></p>
