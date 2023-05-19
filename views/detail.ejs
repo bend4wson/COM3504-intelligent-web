@@ -5,10 +5,10 @@
 
 <body onload="init()">
 
-<div class="p-5">
+<div class="p-2 p-md-5">
     <div class="container">
         <div class="row">
-            <div class="col">
+            <div class="col-12 col-md-6">
 <!--            <img class="bird-img" src="../images/bird.jpg">-->
                 <% if (sighting.picture && sighting.picture.data) { %>
                     <img class="bird-img" src="data:<%= sighting.picture.contentType %>;base64,<%= sighting.picture.data.toString('base64') %>" />
@@ -16,13 +16,14 @@
                     <span>No image</span>
                 <% } %>
                 <h3><%- sighting.type %></h3>
-                <a href="/sightings/update_sighting?id=<%= sighting._id %>" class="btn btn-primary">Update</a>
+<!--                <a href="/sightings/update_sighting?id=<%= sighting._id %>" class="btn btn-primary">Update</a>-->
             </div>
-            <div class="col">
+            <div class="col-12 col-md-6">
                 <h3>Location: </h3>
                 <p>Lat: <%- sighting.location.lat %> </p>
                 <p>Lng: <%- sighting.location.lng %></p>
-                <div id="map" style="width: 100%; height: 300px;"></div>
+                <div id="map" style="height: 400px; width: 100%;">
+                </div>
 
                 <h3>Description</h3>
 <!--                <p>There are 12 template columns available per row, allowing you to create different combinations of elements that span any number of columns. Column classes indicate the number of template columns to span (e.g., col-4 spans four). widths are set in percentages so you always have the same relative sizing.</p>-->
@@ -54,9 +55,9 @@
                     </form>
                 </div>
                 <div id="chat_interface" style="display: none">
-<!--                    <div>-->
-<!--                        <div id="who_you_are" style="display: inline"></div>, you are in room: <div id="in_room" style="display: inline"></div>-->
-<!--                    </div>-->
+                    <div>
+                        <div id="who_you_are" style="display: inline"></div>, you are in room: <div id="in_room" style="display: inline"></div>
+                    </div>
                     <div id="history" class="boxed"></div>
                     <div id="input" class="bottom boxed">
                         <form onsubmit="return false;" style="width: 100%">
@@ -75,7 +76,9 @@
 </div>
 
 <script>
-    initMap('<%= sighting.location.lat %>', '<%= sighting.location.lng %>');
+    <!--initMap('<%= sighting.location.lat %>', '<%= sighting.location.lng %>');-->
+    // initMapWithStaticMarker(position.coords.latitude, position.coords.longitude)
+    initMapWithStaticMarker('<%= sighting.location.lat %>', '<%= sighting.location.lng %>');
 
     async function fetchBirdAbstract(birdName) {
         const sparqlQuery = `

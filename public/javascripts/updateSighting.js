@@ -3,21 +3,10 @@ document.getElementById('sightingForm').addEventListener('submit', async (e) => 
 
     const id = document.getElementById('id').value;
     const type = document.getElementById('type').value;
-    const description = document.getElementById('description').value;
-    const lat = parseFloat(document.getElementById('lat').value);
-    const lng = parseFloat(document.getElementById('lng').value);
-    const userLat = parseFloat(document.getElementById('userLat').value);
-    const userLng = parseFloat(document.getElementById('userLng').value);
 
     const sightingData = {
         id,
-        type,
-        description,
-        location: { lat, lng },
-        userLat,
-        userLng
-        // Add the picture data here when implemented on the form
-        // to add it to the database
+        type
     };
 
     try {

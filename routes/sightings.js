@@ -5,6 +5,10 @@ const Users = require("../databases/users");
 const multer = require('multer');
 const upload = multer({ storage: multer.memoryStorage() });
 
+const { fetchChatHistory } = require('../controllers/chatController');
+router.get('/chat-history/:sightingId', fetchChatHistory);
+
+
 // router.get('/', async (req, res) => {
 //     // res.render('index', { title: 'Bird Watching Page' });
 //     try {
@@ -68,7 +72,8 @@ router.post('/add_sighting', upload.single('picture'), async (req, res) => {
                 lng: req.body.lng,
             },
             lat: req.body.userLat,
-            lng: req.body.userLng
+            lng: req.body.userLng,
+            user: req.body.userId
         };
 
         if (req.file) {
@@ -106,20 +111,6 @@ router.post('/update_sighting', upload.single('picture'), async (req, res) => {
         const sighting = {};
 
         sighting.type = req.body.type;
-        sighting.description = req.body.description;
-        sighting.location = {
-            lat: req.body.location.lat,
-            lng: req.body.location.lng
-        };
-        sighting.lat = req.body.userLat;
-        sighting.lng = req.body.userLng;
-
-        if (req.file) {
-            sighting.picture = {
-                data: req.file.buffer,
-                contentType: req.file.mimetype,
-            };
-        }
 
         await Sighting.findByIdAndUpdate(id, sighting);
         console.log("Sighting updated successfully");
@@ -129,25 +120,6 @@ router.post('/update_sighting', upload.single('picture'), async (req, res) => {
         res.status(400).json({ message: 'Error updating sighting', error });
     }
 });
-
-// router.get('/detail', (req, res) => {
-//
-//
-//     var sightingId = req.query.id;
-//     // retrieve the sighting details from the database using the sightingId
-//     Sighting.findById(sightingId, function(err, sighting) {
-//         if (err) {
-//             return next(err);
-//         }
-//         if (!sighting) {
-//             var err = new Error('Sighting not found');
-//             err.status = 404;
-//             return next(err);
-//         }
-//     }),
-//     // var sightingId = req.query.id;
-//     res.render("detail", { title: 'Bird Detail Page' , sighting: sighting })
-// });
 
 router.get('/detail', async (req, res, next) => {
     // Get the sightingId from the request query

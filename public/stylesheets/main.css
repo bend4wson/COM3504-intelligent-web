@@ -1,7 +1,20 @@
 .bird-thumbnail {
     width: 100%;
+    height: 256px;
+    object-fit: cover;
 }
 
 .bird-img {
     width: 100%;
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.detail-btn {
+    width: fit-content;
+    margin-top: 10px;
 }

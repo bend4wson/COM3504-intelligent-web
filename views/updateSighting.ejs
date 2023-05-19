@@ -17,21 +17,21 @@
 
             <div class="mb-3">
                 <label class="form-label" for="description">Description:</label>
-                <input class="form-control" type="text" name="description" id="description" required value="<%- sighting.description %>" />
+                <input class="form-control" type="text" name="description" id="description" required value="<%- sighting.description %>" disabled />
             </div>
             <div class="mb-3">
                 <label class="form-label" for="lat">Latitude:</label>
-                <input class="form-control" type="number" step="any" name="lat" id="lat" required value="<%- sighting.location.lat %>" />
+                <input class="form-control" type="number" step="any" name="lat" id="lat" required value="<%- sighting.location.lat %>" disabled />
             </div>
             <div class="mb-3">
                 <label class="form-label" for="lng">Longitude:</label>
-                <input class="form-control" type="number" step="any" name="lng" id="lng" required value="<%- sighting.location.lng %>" />
+                <input class="form-control" type="number" step="any" name="lng" id="lng" required value="<%- sighting.location.lng %>" disabled />
             </div>
-            <input class="form-control" type="hidden" name="userLat" id="userLat" required />
-            <input class="form-control" type="hidden" name="userLng" id="userLng" required />
+            <input class="form-control" type="hidden" name="userLat" id="userLat" required disabled />
+            <input class="form-control" type="hidden" name="userLng" id="userLng" required disabled />
             <div class="mb-3">
                 <label class="form-label" for="picture">Picture:</label>
-                <input type="file" name="picture" id="picture" accept="image/*" />
+                <input type="file" name="picture" id="picture" accept="image/*" disabled />
             </div>
             <button type="submit">Update Sighting</button>
             <div id="alert" class="alert alert-success" role="alert" style="display: none">
@@ -41,29 +41,30 @@
     </div>
 </div>
 <script>
-    function getLocation() {
-        console.log('Getting location...');
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
-                (position) => {
-                    console.log('Position received:', position);
-                    document.getElementById('userLat').value = position.coords.latitude;
-                    document.getElementById('userLng').value = position.coords.longitude;
-                },
-                (error) => {
-                    console.warn(`ERROR(${error.code}): ${error.message}`);
-                    console.log('Error details:', error);
-                },
-                {
-                    enableHighAccuracy: true,
-                    timeout: 5000,
-                    maximumAge: 0,
-                }
-            );
-        } else {
-            console.log('Geolocation is not supported by this browser.');
-        }
-    }
+    // function getLocation() {
+    //     console.log('Getting location...');
+    //     if (navigator.geolocation) {
+    //         navigator.geolocation.getCurrentPosition(
+    //             (position) => {
+    //                 console.log('Position received:', position);
+    //                 document.getElementById('userLat').value = position.coords.latitude;
+    //                 document.getElementById('userLng').value = position.coords.longitude;
+    //             },
+    //             (error) => {
+    //                 console.warn(`ERROR(${error.code}): ${error.message}`);
+    //                 console.log('Error details:', error);
+    //             },
+    //             {
+    //                 enableHighAccuracy: true,
+    //                 timeout: 5000,
+    //                 maximumAge: 0,
+    //             }
+    //         );
+    //     } else {
+    //         console.log('Geolocation is not supported by this browser.');
+    //     }
+    // }
+
 
     async function fetchBirdTypes() {
         const sparqlQuery = `
