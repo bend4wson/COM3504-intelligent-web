@@ -1,5 +1,5 @@
 console.log('Script loaded')
-import * as idbKeyval from '../node_modules/idb-keyval/dist/index.js';
+import * as idbKeyval from './libs/idb-keyval/index.js';
 
 document.addEventListener("DOMContentLoaded", function() {
 
@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     async function updateOnlineStatus() {
         if (navigator.onLine) {
-            console.log("GOING ONLINE")
+            // console.log("GOING ONLINE")
             connectionStatus.textContent = 'Online';
             connectionStatus.classList.remove('offline');
             connectionStatus.classList.add('online');
@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function() {
             }
 
         } else {
-            console.log("GOING OFFLINE")
+            // console.log("GOING OFFLINE")
             connectionStatus.textContent = 'Offline';
             connectionStatus.classList.remove('online');
             connectionStatus.classList.add('offline');
