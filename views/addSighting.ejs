@@ -21,19 +21,28 @@
             </div>
             <div class="mb-3">
                 <label class="form-label" for="lat">Latitude:</label>
-                <input class="form-control" type="number" step="any" name="lat" id="lat" required readonly />
+                <input class="form-control" type="number" step="any" name="lat" id="lat" required />
             </div>
             <div class="mb-3">
                 <label class="form-label" for="lng">Longitude:</label>
-                <input class="form-control" type="number" step="any" name="lng" id="lng" required readonly />
+                <input class="form-control" type="number" step="any" name="lng" id="lng" required />
             </div>
 
             <div id="map" style="height: 400px; width: 100%;">
                 <div id="loadingWidget">
                     <p>Loading map...</p>
-                    <!-- *** Replace the paragraph above with a spinner when there is chance, can use Font Awesome or Bootstrap -->
+                    <!-- *** Replace the paragraph above with a spinner when there is a chance, you can use Font Awesome or Bootstrap -->
+                </div>
+                <div id="offlineMessage" style="display: none;">
+                    You are offline, the map is not available.
                 </div>
             </div>
+
+            <!-- Add a message for offline users -->
+            <div id="offlineMessage" style="display: none;">
+                You are currently offline. Geolocation is not possible.
+            </div>
+
 <!--                <label class="form-label" for="map">Choose Sighting Location:</label>-->
 <!--            </div>-->
             <input class="form-control" type="hidden" name="userLat" id="userLat" required />
@@ -86,6 +95,7 @@
                 (error) => {
                     console.warn(`ERROR(${error.code}): ${error.message}`);
                     console.log('Error details:', error);
+                    document.getElementById('offlineMessage').style.display = 'block'; // Show offline message
                 },
                 {
                     enableHighAccuracy: true,
@@ -95,6 +105,7 @@
             );
         } else {
             console.log('Geolocation is not supported by this browser.');
+            document.getElementById('offlineMessage').style.display = 'block'; // Show offline message
         }
     }
 

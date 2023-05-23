@@ -1,8 +1,8 @@
 {
   "lang": "en-uk",
-  "name": "Temperature converter app",
-  "short_name": "My Temperature converter",
-  "description": "A basic temperature converter application that can convert to and from Celsius, Kelvin, and Fahrenheit",
+  "name": "Bird Watcher",
+  "short_name": "Bird Watcher Website",
+  "description": "A bird watching website where users can upload bird sightings and watchers can discuss various birds and sightings",
   "start_url": "/",
   "background_color": "#2f3d58",
   "theme_color": "#2f3d58",
