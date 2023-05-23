@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     async function updateOnlineStatus() {
         if (navigator.onLine) {
-            // console.log("GOING ONLINE")
+            console.log("GOING ONLINE")
             connectionStatus.textContent = 'Online';
             connectionStatus.classList.remove('offline');
             connectionStatus.classList.add('online');
@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function() {
             }
 
         } else {
-            // console.log("GOING OFFLINE")
+            console.log("GOING OFFLINE")
             connectionStatus.textContent = 'Offline';
             connectionStatus.classList.remove('online');
             connectionStatus.classList.add('offline');
@@ -58,6 +58,17 @@ document.addEventListener("DOMContentLoaded", function() {
         await updateOnlineStatus();
     });
 
+    //WHEN GOING TO THE BIRD FORM POST, CHECK WHETHER ONLINE OR OFFLINE USING ONLINEOROFFLINE FUNCTION, THEN USE
+    //UPLOADSIGHTINGONLINE OR UPLOADSIGHTINGOFFLINE ACCORDINGLY.
+
+    //onlineOrOffline
+
+    //uploadSightingOnline
+
+    //uploadSightingOffline
+
+    //****** Uploading sightings may no longer be working, CHECK THIS *******
+
 
 
     //These functions are for uploading and deleting from indexedDB:
@@ -72,14 +83,16 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // Save form data to IndexedDB
-    async function saveFormDataInIndexedDB(formData) {
+    async function saveFormDataInIndexedDBLocal(formData) {
         // Convert the form data to JSON before saving
         const json = formDataToJson(formData);
         await idbKeyval.set('offlineFormData', json);
     }
+    //Makes the function globally accessible so that it can be called from the addSighting.ejs file
+    window.saveFormDataInIndexedDB = saveFormDataInIndexedDBLocal;
 
     // Get form data from IndexedDB
-    async function getFormDataFromIndexedDB() {
+    async function getFormDataFromIndexedDBLocal() {
         const json = await idbKeyval.get('offlineFormData');
         if (json) {
             // If there's data, delete it from the database
@@ -90,4 +103,6 @@ document.addEventListener("DOMContentLoaded", function() {
             return null;
         }
     }
+    window.getFormDataFromIndexedDB = getFormDataFromIndexedDBLocal;
+
 });

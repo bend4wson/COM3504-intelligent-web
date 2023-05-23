@@ -43,6 +43,7 @@
                 <label class="form-label" for="picture">Picture:</label>
                 <input type="file" name="picture" id="picture" accept="image/*" />
             </div>
+
             <button type="submit">Add Sighting</button>
         </form>
     </div>
@@ -62,6 +63,8 @@
     //     }
     // }
     async function addSighting() {
+        event.preventDefault(); // prevent form submission (when form is submitted any js after that point isn't run/is cut off)
+
         const form = document.getElementById('sightingForm');
         const formData = new FormData(form);
 
@@ -164,6 +167,7 @@
         const birdTypes = await fetchBirdTypes();
         populateBirdTypesDropdown(birdTypes);
         getLocation();
+        document.getElementById('sightingForm').addEventListener('submit', addSighting);
     });
 </script>
 <script>
