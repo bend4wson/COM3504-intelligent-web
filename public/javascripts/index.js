@@ -3,6 +3,8 @@ let roomNo = null;
 let socket = io();
 
 
+
+
 /**
  * called by <body onload>
  * it initialises the interface and the expected socket messages
@@ -184,3 +186,16 @@ window.onload = function() {
         document.getElementById("form").submit();
     })
 }
+
+
+// Service worker registration
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', function() {
+        navigator.serviceWorker.register('/sw.js').then(function(registration) {
+            console.log('ServiceWorker registration successful with scope: ', registration.scope);
+        }, function(err) {
+            console.log('ServiceWorker registration failed: ', err);
+        });
+    });
+}
+
