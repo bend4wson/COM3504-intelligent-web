@@ -12,18 +12,29 @@ document.addEventListener("DOMContentLoaded", function() {
             connectionStatus.classList.remove('offline');
             connectionStatus.classList.add('online');
 
-            // Retrieve and delete the form data from IndexedDB
+            // Retrieve the form data from IndexedDB
             const formData = await getFormDataFromIndexedDB();
             if (formData) {
                 // There is offline data to upload
                 try {
+                    // Convert formData object back into a FormData instance
+                    const convertedFormData = new FormData();
+                    for (let [key, value] of Object.entries(formData)) {
+                        if (key === 'picture') {
+                            // Fetch the Blob from the URL and convert it back into a File
+                            const response = await fetch(value);
+                            const blob = await response.blob();
+                            const file = new File([blob], 'uploaded_picture');  // Name the file 'uploaded_picture'. Adjust this as needed.
+                            convertedFormData.append(key, file);
+                        } else {
+                            convertedFormData.append(key, value);
+                        }
+                    }
+
                     // Upload the data to the server
                     const response = await fetch('/sightings/add_sighting', {
                         method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(formData),
+                        body: convertedFormData,  // Use convertedFormData instead of JSON
                     });
 
                     if (!response.ok) {
@@ -73,36 +84,42 @@ document.addEventListener("DOMContentLoaded", function() {
 
     //These functions are for uploading and deleting from indexedDB:
 
-    // Convert FormData to JSON
-    function formDataToJson(formData) {
+    // Convert FormData to a plain object
+    function formDataToObject(formData) {
         let obj = {};
-        for (let key of formData.keys()) {
-            obj[key] = formData.get(key);
+        for (let [key, value] of formData.entries()) {
+            if (value instanceof File) {
+                // Convert file to Blob and store it separately
+                obj[key] = URL.createObjectURL(value);
+            } else {
+                obj[key] = value;
+            }
         }
-        return JSON.stringify(obj);
+        return obj;
     }
 
     // Save form data to IndexedDB
     async function saveFormDataInIndexedDBLocal(formData) {
-        // Convert the form data to JSON before saving
-        const json = formDataToJson(formData);
-        await idbKeyval.set('offlineFormData', json);
+        // Convert the form data to a plain object before saving
+        const obj = formDataToObject(formData);
+        await idbKeyval.set('offlineFormData', obj);
     }
+
     //Makes the function globally accessible so that it can be called from the addSighting.ejs file
     window.saveFormDataInIndexedDB = saveFormDataInIndexedDBLocal;
 
     // Get form data from IndexedDB
     async function getFormDataFromIndexedDBLocal() {
-        const json = await idbKeyval.get('offlineFormData');
-        if (json) {
+        const obj = await idbKeyval.get('offlineFormData');
+        if (obj) {
             // If there's data, delete it from the database
             await idbKeyval.del('offlineFormData');
-            // Convert the JSON back to an object and return it
-            return JSON.parse(json);
+            return obj;
         } else {
             return null;
         }
     }
     window.getFormDataFromIndexedDB = getFormDataFromIndexedDBLocal;
+
 
 });
