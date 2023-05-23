@@ -5,7 +5,6 @@
 <script src="/javascripts/onlineOffline.js"></script>
 
 
-
 <div class="card col-11 col-md-6" style="margin: 100px auto;">
     <div class="card-body">
         <h1>Add your sighting below:</h1>
@@ -49,31 +48,26 @@
     </div>
 </div>
 <script>
-    // function addSighting() {
-    //     // const form = document.getElementById('sightingForm');
-    //     // form.submit();
-    //     if (navigator.onLine) {
-    //         // User is online, submit the form as usual
-    //         const form = document.getElementById('sightingForm');
-    //         form.submit();
-    //     } else {
-    //         // User is offline, save the form data in IndexedDB
-    //         const formData = new FormData(document.getElementById('sightingForm'));
-    //         saveFormDataInIndexedDB(formData);
-    //     }
-    // }
+    // A global variable to store whether the data has been saved to IndexedDB
+    let savedToIndexedDB = false;
+
     async function addSighting() {
-        event.preventDefault(); // prevent form submission (when form is submitted any js after that point isn't run/is cut off)
+        // Prevents form submission (when form is submitted any js after that point isn't run/is cut off)
+        event.preventDefault();
 
         const form = document.getElementById('sightingForm');
         const formData = new FormData(form);
 
         if (navigator.onLine) {
             // User is online, submit the form as usual
-            form.submit();
+            if (!savedToIndexedDB) {
+                // Only submit the form if the data has not been saved to IndexedDB
+                form.submit();
+            }
         } else {
             // User is offline, save the form data in IndexedDB
             await saveFormDataInIndexedDB(formData);
+            savedToIndexedDB = true;
         }
     }
 

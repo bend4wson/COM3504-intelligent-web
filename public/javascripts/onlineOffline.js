@@ -42,6 +42,9 @@ document.addEventListener("DOMContentLoaded", function() {
                     }
 
                     console.log('Offline data uploaded successfully');
+
+                    // Resetting the flag since the data has been uploaded
+                    savedToIndexedDB = false;
                 } catch (error) {
                     console.error('Error uploading offline data:', error);
                     // Put the data back into IndexedDB, so we can try again next time the user goes online
