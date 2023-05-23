@@ -2,7 +2,6 @@ let name = null;
 let roomNo = null;
 let socket = io();
 
-
 /**
  * called by <body onload>
  * it initialises the interface and the expected socket messages
@@ -105,7 +104,7 @@ function connectToRoom(sightingId) {
     // room = 1;
     roomNo = sightingId.toString()
 
-    name = document.getElementById('name').value;
+    name = getNickname();
     if (!name) name = 'Unknown-' + Math.random();
     socket.emit('create or join', roomNo, name);
 }
@@ -169,6 +168,27 @@ function hideLoginInterface(room, userId) {
 //     });
 // }
 
+
+/**
+ * called by the HTML onload
+ * showing any cached sighting data and declaring the service worker
+ */
+function initSighting() {
+    //check for support
+    if ('indexedDB' in window) {
+        initDatabase();
+    }
+    else {
+        console.log('This browser doesn\'t support IndexedDB');
+    }
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker
+          .register('./service-worker.js')
+          .then(function() { console.log('Service Worker Registered'); });
+    }
+    // loadData(false);
+}
+
 window.onload = function() {
     const sortEle = document.getElementById("sort");
     const sortOptions = sortEle.getElementsByTagName('option');
@@ -182,5 +202,7 @@ window.onload = function() {
 
     sortEle.addEventListener("change", function(event) {
         document.getElementById("form").submit();
-    })
+    });
+
+    initSighting();
 }

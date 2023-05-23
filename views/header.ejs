@@ -8,8 +8,10 @@
     <link rel="stylesheet" type="text/css" href="/stylesheets/index.css">
     <link rel="stylesheet" type="text/css" href="/stylesheets/header.css">
     <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <script src="/javascripts/database.js" type="module"></script>
     <script src="/javascripts/index.js"></script>
     <script src="/javascripts/osmMap.js"></script>
+    <script src="/javascripts/nickname.js"></script>
 </head>
 <body>
     <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
@@ -29,10 +31,6 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/sightings/add_sighting">Add a sighting</a>
                     </li>
-                    <li>
-                        <div id="connection-status" class="offline">Offline</div>
-                        <script src="/javascripts/onlineOffline.js"></script>
-                    </li>
 <!--                    <li class="nav-item">-->
 <!--                        <a class="nav-link" href="/">Features2</a>-->
 <!--                    </li>-->
@@ -40,6 +38,8 @@
 <!--                        <a class="nav-link" href="/sightings/detail">Bird details (TEMPORARY)</a>-->
 <!--                    </li>-->
                 </ul>
+                <div id="connection-status" class="offline">Offline</div>
+                <div id="nickname"></div>
             </div>
         </div>
     </nav>

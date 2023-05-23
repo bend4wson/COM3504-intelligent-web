@@ -73,7 +73,7 @@ router.post('/add_sighting', upload.single('picture'), async (req, res) => {
             },
             lat: req.body.userLat,
             lng: req.body.userLng,
-            user: req.body.userId
+            username: req.body.username
         };
 
         if (req.file) {

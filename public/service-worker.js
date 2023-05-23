@@ -17,15 +17,24 @@ let dataCacheName = 'intelligent-web';
 let cacheName = 'intelligentWebPWA';
 let filesToCache = [
     '/',
-    '/javascript/converter.js',
-    '/javascript/bootstrap.min.js',
+    '/javascripts/addSighting.js',
+    '/javascripts/bootstrap.min.js',
+    '/javascripts/converter.js',
+    '/javascripts/database.js',
+    '/javascripts/index.js',
+    '/javascripts/indexedDB.js',
+    '/javascripts/login.js',
+    '/javascripts/nickname.js',
+    '/javascripts/onlineOffline.js',
+    '/javascripts/osmMap.js',
+    '/javascripts/updateSighting.js',
+    '/javascripts/idb/index.js',
     '/stylesheets/bootstrap.min.css',
+    '/stylesheets/header.css',
+    '/stylesheets/index.css',
     '/stylesheets/style.css',
     '/stylesheets/main.css',
-    'stylesheets/index.css', //Added to style the login/sign up and add sightings buttons on index.ejs
-    '/images/bird.jpg',
     '/images/temperature.png',
-    '/favicon.ico'
 ];
 
 

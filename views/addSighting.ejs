@@ -12,7 +12,6 @@
                 <label class="form-label" for="type">Type:</label>
                 <select class="form-control" name="type" id="type" required></select>
             </div>
-
             <div class="mb-3">
                 <label class="form-label" for="description">Description:</label>
                 <input class="form-control" type="text" name="description" id="description" required />
@@ -36,9 +35,10 @@
 <!--            </div>-->
             <input class="form-control" type="hidden" name="userLat" id="userLat" required />
             <input class="form-control" type="hidden" name="userLng" id="userLng" required />
+            <input class="form-control" type="hidden" name="username" id="username" required />
             <div class="mb-3">
                 <label class="form-label" for="picture">Picture:</label>
-                <input type="file" name="picture" id="picture" accept="image/*" />
+                <input class="form-control" type="file" name="picture" id="picture" accept="image/*" />
             </div>
             <button type="submit">Add Sighting</button>
         </form>
@@ -140,6 +140,8 @@
         const birdTypes = await fetchBirdTypes();
         populateBirdTypesDropdown(birdTypes);
         getLocation();
+
+        document.getElementById("username").value = getNickname();
     });
 </script>
 <script>

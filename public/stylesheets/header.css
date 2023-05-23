@@ -18,3 +18,10 @@
     color: white;
     display: block;
 }
+
+#nickname {
+    flex: 1;
+    color: white;
+    text-align: right;
+    padding-right: 80px;
+}
