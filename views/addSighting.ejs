@@ -1,13 +1,13 @@
 <%- include('header'); -%>
-<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<link rel="stylesheet" href="/leaflet/leaflet.css" />
+<script src="/leaflet/leaflet.js"></script>
 
 
 <div class="card col-11 col-md-6" style="margin: 100px auto;">
     <div class="card-body">
         <h1>Add your sighting below:</h1>
 
-        <form id="sightingForm" action="/sightings/add_sighting" method="post" enctype="multipart/form-data">
+        <form id="sightingForm">
             <div class="mb-3">
                 <label class="form-label" for="type">Type:</label>
                 <select class="form-control" name="type" id="type" required></select>
@@ -77,8 +77,6 @@
         }
     }
 
-
-
     async function fetchBirdTypes() {
         const sparqlQuery = `
     PREFIX dbo: <http://dbpedia.org/ontology/>
@@ -102,7 +100,6 @@
             return [];
         }
     }
-
 
     function populateBirdTypesDropdown(birdTypes) {
         // Sort the birdTypes array alphabetically by birdLabel value
@@ -128,11 +125,6 @@
         });
     }
 
-
-
-
-
-
     // Call getLocation when the page loads
     // window.addEventListener('DOMContentLoaded', getLocation);
 
@@ -144,10 +136,72 @@
         document.getElementById("username").value = getNickname();
     });
 </script>
-<script>
-    function formSubmission(){
+<script type="module">
+  // Add event listener for window loaded
+  window.addEventListener('DOMContentLoaded', async () => {
+    const sightingForm = document.getElementById("sightingForm");
 
-    }
+    // Add submit listener for sightingForm
+    sightingForm.addEventListener("submit", async function(e) {
+      e.preventDefault();
+
+      // Read upload image to base64
+      const file = document.getElementById('picture').files[0];
+      const reader = new FileReader();
+      reader.readAsArrayBuffer(file);
+      const picture = await new Promise(resolve => {
+        reader.onload = function () {
+          const arrayBuffer = this.result;
+          const array = new Uint8Array(arrayBuffer);
+          resolve({ data: array, contentType: file.type });
+        };
+      })
+
+      // Construct a new sighting
+      const newSighting = {
+        description: document.getElementById('description').value,
+        type: document.getElementById('type').value,
+        location: {
+          lat:  document.getElementById('lat').value,
+          lng:  document.getElementById('lng').value,
+        },
+        lat: document.getElementById('userLat').value,
+        lng: document.getElementById('userLng').value,
+        picture: { data: picture, contentType: file.type },
+        timestamp: new Date().toISOString(),
+        username: document.getElementById('username').value,
+        file: file
+      }
+
+      // Store new sighting to indexDB
+      storeCachedData([newSighting]).then(() => {
+        if (navigator.onLine) {
+          // Construct a new sighting form
+          const formData = new FormData();
+          formData.append("type", newSighting.type);
+          formData.append("description", newSighting.description);
+          formData.append("userLat", newSighting.lat);
+          formData.append("userLng", newSighting.lng);
+          formData.append("lat", newSighting.location.lat);
+          formData.append("lng", newSighting.location.lng);
+          formData.append("username", newSighting.username);
+          formData.append("picture", file);
+          // Send sighting to server
+          fetch('/sightings/api/add_sighting', {
+            method: 'POST',
+            body: formData
+          }).then(res => {
+            console.log("Sync a sighting to database.");
+            window.location.href = '/';
+          }).catch(err => {
+            console.log("Sync fail.");
+          });
+        } else {
+          window.location.href = '/';
+        }
+      });
+    })
+  });
 </script>
 
 

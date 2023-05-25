@@ -37,7 +37,7 @@
             <option value="2">Distance</option>
         </select>
     </form>
-    <div class="d-flex flex-wrap p-2 p-md-5">
+    <div id="sighting_list" class="d-flex flex-wrap p-2 p-md-5">
             <% sightings.forEach(function(sighting){ %>
                 <div class="card mb-3 mx-md-2 mx-auto" style="width: 22rem;">
                     <% if (sighting.picture && sighting.picture.data) { %>
@@ -70,14 +70,118 @@
             <% }) %>
         </div>
 
-        <script>
-          const sightings = <%-JSON.stringify(sightings)%>;
+        <script type="module">
           const nickname = getNickname();
-          const cardActions = document.getElementsByClassName("card-actions");
-          sightings.forEach((sighting, index) => {
-            if (sighting.username === nickname) {
-              cardActions[index].innerHTML += `<a href="/sightings/update_sighting?id=${sighting._id}" class="btn btn-primary detail-btn">Update</a>`;
+          const sightingList = document.getElementById("sighting_list");
+
+          // Fetch sighting list form server
+          function fetchSightings(sort) {
+            fetch('/api/sightings?sort=' + sort)
+              .then(res => res.json())
+              .then(sightings => {
+                renderSightingList(sightings);
+
+                clearCachedData();
+                storeCachedData(sightings);
+              })
+          }
+
+          // Get sighting list from indexDB
+          function getSightingsFromCached() {
+            getCachedData().then(cachedData => {
+              renderSightingList(cachedData);
+            });
+          }
+
+          function renderSightingList(sightings) {
+            sightingList.innerHTML = '';
+            for (let i = 0; i < sightings.length; i++) {
+              let sighting = sightings[i];
+              let base64 = btoa(
+                new Uint8Array(sighting.picture.data.data)
+                  .reduce((data, byte) => data + String.fromCharCode(byte), '')
+              );
+              sightingList.innerHTML += `
+                <div class="card mb-3 mx-md-2 mx-auto" style="width: 22rem;">
+                    ${sighting.picture && sighting.picture.data ? `<img class="bird-thumbnail" src="data:${sighting.picture.contentType};base64,${base64}" />` : '<span>No image</span>'}
+                    <div class="card-body">
+                        <div>
+                            <h5 class="card-title">${sighting.type}</h5>
+                            <div class="d-flex align-items-center mb-2">
+                                <strong class="me-2">Location: </strong>
+                                <h6 class="card-subtitle text-body-secondary">${sighting.location.lat}, ${sighting.location.lng}</h6>
+                            </div>
+                            <div class="d-flex align-items-center mb-2">
+                                <strong class="me-2">Description: </strong>
+                                <p class="card-text" style="word-break: break-all">${sighting.description}</p>
+                            </div>
+                            <div>
+                                <strong class="me-2">nickname: </strong>${sighting.username}
+                            </div>
+                        </div>
+                        <div class="card-actions">
+                            <a href="/sightings/detail?id=${sighting._id}" class="btn btn-primary detail-btn">Details</a>
+                            ${sighting.username === nickname ? `<a href="/sightings/update_sighting?id=${sighting._id}" class="btn btn-primary detail-btn">Update</a>`: ''}
+                        </div>
+                    </div>
+                </div>
+              `
+            }
+          }
+
+          if (navigator.onLine) {
+            fetchSightings();
+          } else {
+            getSightingsFromCached()
+          }
+
+          window.addEventListener('DOMContentLoaded', async () => {
+            const sortEle = document.getElementById("sort");
+            if (sortEle) {
+              const sortOptions = sortEle.getElementsByTagName('option');
+              const urlSearchParams = new URLSearchParams(window.location.search);
+              const sort = urlSearchParams.get('sort');
+              for (let i = 0; i < sortOptions.length; i++) {
+                if (sortOptions[i].value === sort) {
+                  sortOptions[i].selected = true;
+                }
+              }
+
+              sortEle.addEventListener("change", function(event) {
+                fetchSightings(event.target.value)
+              });
             }
           });
+
+          // Synchronize Unsaved Data to Database
+          function handleOnlineStatus() {
+            getCachedData().then(cachedData => {
+              const filterCachedData = cachedData.filter(item => !item._id);
+              for (let i = 0; i < filterCachedData.length; i++) {
+                // Construct a new sighting form
+                const formData = new FormData();
+                formData.append("type", filterCachedData[i].type);
+                formData.append("description", filterCachedData[i].description);
+                formData.append("userLat", filterCachedData[i].lat);
+                formData.append("userLng", filterCachedData[i].lng);
+                formData.append("lat", filterCachedData[i].location.lat);
+                formData.append("lng", filterCachedData[i].location.lng);
+                formData.append("username", filterCachedData[i].username);
+                formData.append("picture", filterCachedData[i].file);
+                // Send sighting to server
+                fetch('/sightings/api/add_sighting', {
+                  method: 'POST',
+                  body: formData
+                }).then(res => {
+                  console.log("Sync a sighting to database.");
+                }).catch(err => {
+                  console.log("Sync fail.");
+                });
+              }
+            });
+          }
+
+          // Add event listeners for online events
+          window.addEventListener('online', handleOnlineStatus);
         </script>
 <%- include('footer'); -%>

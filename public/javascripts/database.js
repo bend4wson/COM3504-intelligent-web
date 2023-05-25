@@ -40,14 +40,16 @@ async function storeCachedData(sightingList) {
         try{
             let tx = await db.transaction(SIGHTING_STORE_NAME, 'readwrite');
             let store = await tx.objectStore(SIGHTING_STORE_NAME);
-            await store.put(sightingList);
+            for (let i = 0; i < sightingList.length; i++) {
+                await store.put(sightingList[i]);
+            }
             await  tx.complete;
             console.log('added item to the store! '+ JSON.stringify(sightingList));
         } catch(error) {
             localStorage.setItem("sightings", JSON.stringify(sightingList));
         };
     }
-    else localStorage.setItem(sightings, JSON.stringify(sightingList));
+    else localStorage.setItem("sightings", JSON.stringify(sightingList));
 }
 
 window.storeCachedData=storeCachedData;
@@ -63,20 +65,13 @@ async function getCachedData() {
         try {
             let tx = await db.transaction(SIGHTING_STORE_NAME, 'readonly');
             let store = await tx.objectStore(SIGHTING_STORE_NAME);
-            let index = await store.index('location');
-            let readingsList = await index.getAll(IDBKeyRange.only(city));
+            let readingsList = await store.getAll();
             await tx.complete;
             let finalResults=[];
             if (readingsList && readingsList.length > 0) {
-                let max;
-                for (let elem of readingsList)
-                    if (!max || elem.date > max.date)
-                        max = elem;
-                if (max)
-                    finalResults.push(max);
-                return finalResults;
+                return readingsList;
             } else {
-                const value = localStorage.getItem(city);
+                const value = localStorage.getItem("sightings");
                 if (value == null)
                     return finalResults;
                 else finalResults.push(value);
@@ -86,7 +81,7 @@ async function getCachedData() {
             console.log(error);
         }
     } else {
-        const value = localStorage.getItem(city);
+        const value = localStorage.getItem("sightings");
         let finalResults=[];
         if (value == null)
             return finalResults;
@@ -95,3 +90,26 @@ async function getCachedData() {
     }
 }
 window.getCachedData= getCachedData;
+
+
+/**
+ * it clear the sightings in localStorage
+ */
+async function clearCachedData() {
+    if (!db)
+        await initDatabase();
+    if (db) {
+        try{
+            let tx = await db.transaction(SIGHTING_STORE_NAME, 'readwrite');
+            let store = await tx.objectStore(SIGHTING_STORE_NAME);
+            store.clear();
+            await  tx.complete;
+            console.log('clear all item from the store! ');
+        } catch(error) {
+            localStorage.removeItem("sightings");
+        }
+    }
+    else localStorage.removeItem("sightings");
+}
+
+window.clearCachedData=clearCachedData;

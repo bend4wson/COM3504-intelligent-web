@@ -46,6 +46,29 @@ router.get('/', async (req, res) => {
   }
 });
 
+router.get('/api/sightings', async (req, res) => {
+  try {
+    const sort = req.query.sort;
+    const sortArgs = {};
+    if (sort === "1") {
+      sortArgs.timestamp = -1;
+    }
+
+    let sightings = await Sighting.find().sort(sortArgs);
+    if (sort === "2") {
+      sightings = sightings.sort((a, b) =>
+        Math.sqrt(Math.pow(b.lat - b.location.lat, 2) + Math.pow(b.lng - b.location.lng, 2)) -
+        Math.sqrt(Math.pow(a.lat - a.location.lat, 2) + Math.pow(a.lng - a.location.lng, 2))
+      )
+    }
+
+    res.json(sightings);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Error fetching data from the database');
+  }
+});
+
 
 //This needs implementing if we're doing a dashboard page
 router.get('/dashboard', function(req, res, next) {

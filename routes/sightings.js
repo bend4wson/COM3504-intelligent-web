@@ -60,7 +60,7 @@ router.get('/', async (req, res) => {
 });
 
 // router.post('/add_sighting', async (req, res) => {
-router.post('/add_sighting', upload.single('picture'), async (req, res) => {
+router.post('/api/add_sighting', upload.single('picture'), async (req, res) => {
     try {
         console.log("1");
 
@@ -86,7 +86,7 @@ router.post('/add_sighting', upload.single('picture'), async (req, res) => {
         const newSighting = new Sighting(newSightingData);
         await newSighting.save();
         console.log("Sighting added successfully");
-        res.redirect('/');
+        res.status(201).send();
     } catch (error) {
         console.error("Error adding sighting", error);
         res.status(400).json({ message: 'Error adding sighting', error });

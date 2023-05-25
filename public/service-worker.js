@@ -17,9 +17,11 @@ let dataCacheName = 'intelligent-web';
 let cacheName = 'intelligentWebPWA';
 let filesToCache = [
     '/',
+    // '/sightings/detail',
     '/javascripts/addSighting.js',
     '/javascripts/bootstrap.min.js',
     '/javascripts/converter.js',
+    '/javascripts/socket.io.min.js',
     '/javascripts/database.js',
     '/javascripts/index.js',
     '/javascripts/indexedDB.js',
@@ -34,7 +36,15 @@ let filesToCache = [
     '/stylesheets/index.css',
     '/stylesheets/style.css',
     '/stylesheets/main.css',
+    '/leaflet/leaflet.js',
+    '/leaflet/leaflet.css',
+    '/leaflet/images/layers.png',
+    '/leaflet/images/layers-2x.png',
+    '/leaflet/images/marker-icon.png',
+    '/leaflet/images/marker-icon-2x.png',
+    '/leaflet/images/marker-shadow.png',
     '/images/temperature.png',
+    '/favicon.ico',
 ];
 
 
@@ -93,9 +103,9 @@ self.addEventListener('activate', function (e) {
  */
 self.addEventListener('fetch', function (e) {
     console.log('[Service Worker] Fetch', e.request.url);
-    let dataUrl = '/api';
+    let urls = ['/api', 'dbpedia.org', 'openstreetmap.org', 'socket.io'];
     //if the request is '/weather_data', post to the server - do nit try to cache it
-    if (e.request.url.indexOf(dataUrl) > -1) {
+    if (urls.some(url => e.request.url.indexOf(url) > -1)) {
         /*
          * When the request URL contains dataUrl, the app is asking for fresh
          * weather data. In this case, the service worker always goes to the
@@ -103,15 +113,15 @@ self.addEventListener('fetch', function (e) {
          * network" strategy:
          * https://jakearchibald.com/2014/offline-cookbook/#cache-then-network
          */
-        return fetch(e.request)
-            .then( (response) => {
-                // note: it the network is down, response will contain the error
-                // that will be passed to Ajax
-                return response;
-            })
-            .catch((error) => {
-                return error;
-            })
+        // return fetch(e.request)
+        //     .then( (response) => {
+        //         // note: it the network is down, response will contain the error
+        //         // that will be passed to Ajax
+        //         return response;
+        //     })
+        //     .catch((error) => {
+        //         return error;
+        //     })
     } else {
         /*
          * The app is asking for app shell files. In this scenario the app uses the
