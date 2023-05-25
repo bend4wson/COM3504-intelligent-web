@@ -198,6 +198,10 @@ workbox.precaching.precacheAndRoute([
     /* Add your image paths here */
     '/sw.js',
     /* Remember to add the paths for your .ejs files as well */
+    '/',
+    '/login',
+    '/register',
+    '/sightings/add_sighting'
 ]);
 
 // Handle runtime or dynamic caching
